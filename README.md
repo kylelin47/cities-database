@@ -6,6 +6,10 @@ Jinchi Liu
 Qian Wang  
 Joachim Jones  
 Kyle Lin  
+  
+Conventions:  
+Return asciiname column from cities  
+Only show results with population > 1000  
 
 Tutorials:  
 Create table from text file: http://www.thegeekstuff.com/2012/06/oracle-sqlldr/  
