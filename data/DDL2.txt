@@ -1,0 +1,11 @@
+CREATE TABLE countries
+AS ( SELECT DISTINCT country, COUNT(geonameid) AS cities, SUM(population) AS population
+     FROM cities
+     GROUP BY country );
+
+ALTER TABLE countries
+ADD PRIMARY KEY (country);
+
+ALTER TABLE cities
+ADD FOREIGN KEY (country)
+REFERENCES countries(country);

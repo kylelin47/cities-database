@@ -1,0 +1,35 @@
+CREATE TABLE cities(
+geonameid INTEGER,
+name VARCHAR2(400),
+asciiname VARCHAR2(400),
+alternatenames clob,
+latitude NUMBER(19,16),
+longitude NUMBER(19,16),
+fclass VARCHAR2(1),
+fcode VARCHAR2(20),
+country VARCHAR2(2),
+cc2 VARCHAR2(120),
+admin1 VARCHAR2(40),
+admin2 VARCHAR2(160),
+admin3 VARCHAR2(40),
+admin4 VARCHAR2(40),
+population INTEGER,
+elevation INTEGER,
+dem VARCHAR2(32),
+time_zone VARCHAR2(32),
+moddate VARCHAR2(20));
+
+create table continents (
+  iso         varchar2(2),
+  name        varchar2(32),
+  geonameid  integer);
+   
+insert into continents values ('AF', 'Africa', 6255146);
+insert into continents values ('AS', 'Asia', 6255147);
+insert into continents values ('EU', 'Europe', 6255148);
+insert into continents values ('NA', 'North America', 6255149);
+insert into continents values ('OC', 'Oceania', 6255151);
+insert into continents values ('SA', 'South America', 6255150);
+insert into continents values ('AN', 'Antarctica', 6255152);
+ 
+commit;
