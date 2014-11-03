@@ -4,8 +4,8 @@ include "database.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
-$statement = oci_parse($connection, 'SELECT * FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
-//$statement = oci_parse($connection, 'SELECT '.htmlspecialchars($_POST['attrNames']).' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
+//$statement = oci_parse($connection, 'SELECT * FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
+$statement = oci_parse($connection, 'SELECT '.htmlspecialchars($_POST['attrNames']).' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
 
 oci_execute($statement);
 echo "<html>";
