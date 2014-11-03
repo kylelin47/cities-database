@@ -8,6 +8,7 @@ oci_execute($statement);
 echo "<html>";
 echo "<head>";
 echo "<script src='sorttable.js' type='text/javascript'></script>";
+echo "<link rel='stylesheet' href='table_style.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";
 echo "<table border='1' class='sortable'>\n";
