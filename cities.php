@@ -26,14 +26,21 @@ echo "<script src='sorttable.js' type='text/javascript'></script>";
 echo "<link rel='stylesheet' href='styles/table_styles.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";
-echo "<table border='1' class='sortable'>\n";
+echo "<table class='sortable'>\n";
 echo "<tr>\n";
-echo "      <th>Name</th>\n";
-echo "      <th>Country</th>\n";
-echo "      <th>Population</th>\n";
-echo "      <th>Elevation</th>\n";
-echo "      <th>Latitude</th>\n";
-echo "      <th>Longitude</th>\n";
+for ($i=0; $i < $N; $i++)
+{
+	echo "<th>";
+	if ($attributes[$i] == 'asciiname')
+	{
+		echo "Name";
+	}
+	else
+	{
+		echo $attributes[$i];
+	}
+	echo "</th>\n";
+}
 echo "</tr>\n";
 echo "<tr>\n";
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
