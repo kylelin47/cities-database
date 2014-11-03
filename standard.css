@@ -1,4 +1,6 @@
-
+body{
+	background-color: rgba(209,209,209,0.2);
+}
 
 h2{
 	text-align: center;
@@ -14,14 +16,23 @@ h2{
 	height: 960px;
 	border: 1px solid rgba(0,0,0,0.3);
 	border-radius: 7px 7px 7px 7px;	
+	background-color: white;
+}
+#box p{
+	margin-top: 90px;
+	font-size:20;
+	padding: 5px;
+	color: rgba(0,0,0,0.5);
+	text-indent: 50px;
+	font: Arial;
 }
 
 #toolBar{
-	
+
 	margin: 0;
 	margin-top: 10px;
 	padding-right: 0px;
-	font-size: 23px;
+	font-size: 20px;
 	background-color: rgba(0,0,0,0.1);
 	border-bottom: rgba(0,0,0,0.3);
 }
@@ -37,3 +48,4 @@ h2{
 	background-color: rgba(0,0,0,0.1);
 
 }
+

@@ -1,6 +1,6 @@
 body{
 
-	background: url("") no-repeat center center fixed;
+	background: url("image/city.jpg") no-repeat center center fixed;
 	background-size: cover;
 /*
 	position:relative;
@@ -15,7 +15,12 @@ body{
 }
 
 h3{
+	color: rgba(0,0,0,0.9);
 	text-align: center;
+}
+
+h3.author{
+
 }
 
 #toolBar{
@@ -307,7 +312,7 @@ a.notification:hover span{
 	top:0px;
 	margin:0px;
 }
-
+/*
 #gen {
 	position:fixed;
 	margin-top:0px;
@@ -327,3 +332,4 @@ a.notification:hover span{
 	height:80%;
 	border-right: 1px solid black;
 }
+*/
