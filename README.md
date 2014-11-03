@@ -27,4 +27,15 @@ I use cat > file_name.ext to create a file, but there is probably a better way.
 After each file creation, you must set permissions using chmod.  
 For .html files, do "chmod 644 file_name.html"  
 For .php files, do "chmod 711 file_name.php"  
-Then accesss the files by going to cise.ufl.edu/~jojones/file  
+Then accesss the files by going to cise.ufl.edu/~jojones/file
+
+HOW TO ACCESS MY DIRECTORY:
+===========================
+Use putty to go to storm.cise.ufl.edu  
+Login as yourself  
+You should be apart of the citiesdatabase group, which you can check by typing "groups"  
+To go to my public_html directory (where the files are), simply:  
+cd..  
+cd jojones/public_html  
+ls should then show all our relevant files  
+
