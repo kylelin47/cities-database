@@ -1,13 +1,17 @@
 <?php
- $username = $_POST['username'];
- $username = $_POST['password'];
+include "database.php";
+$connection = oci_connect($username,
+                          $password,
+                          $connection_string);
  
-if($username && $username ){
-	 $connection = ori_connect('cise.ufl.edu','kylin','citiesdatabase') or die("False connection");
-	ori_select_db('Login') or die("False DB");
-}
-else
-	die("False input Or No input");
+ if ($connection){
+ 	
+ 	
+ }
+ 
+ else 
+ 	die("No Connection");
+
 
  
 ?>
