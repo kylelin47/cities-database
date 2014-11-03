@@ -41,5 +41,7 @@ ls should then show all our relevant files
 
 TO MAKE YOUR OWN WEBSITE ON CISE SERVERS:
 =========================================
-Follow the steps here: http://www.cise.ufl.edu/~mschneid/Teaching/CIS4301_Fall2014/php_oracle_help.txt
-
+Follow the steps here: http://www.cise.ufl.edu/~mschneid/Teaching/CIS4301_Fall2014/php_oracle_help.txt  
+Clone this repository into your public_html folder  
+Follow same steps you used to make public_html viewable to make cities-database viewable  
+chmod 711 for php files within cities-database, chmod 644 for css/html/js files
