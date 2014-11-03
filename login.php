@@ -13,5 +13,9 @@ $connection = oci_connect($username,
  	die("No Connection");
 
 
- 
+ //
+// VERY important to close Oracle Database Connections and free statements!
+//
+oci_free_statement($statement);
+oci_close($connection);
 ?>
