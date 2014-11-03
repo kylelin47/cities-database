@@ -1,19 +1,26 @@
 <!doctype html>
 
 <html>
-	<title>FirstPage</title>
+	<title>User</title>
 	<link rel = "stylesheet" href = "standard.css" type = "text/css" />
 	
 	<body>
-		<h2>Guide</h2>
+		<h2>User</h2>
 
 		<div id = "box">
 			<ul id = "toolBar">
 				<li><a href = "index.html">Home</a></li>
+				<li><a href = "Guide.html">User</a></li>
 				<li><a href = "FAQ.html">FAQ</a></li>
 				<li><a href = "Queries.html">Queries</a></li>
 				<li><a href = "User.html">User</a></li>
 			</ul>
 		</div>
+		
+		<form action = 'login.php' method = 'post'>
+			Username: <input type = 'text' name = 'username'><br>
+			Password: <input type = 'password' name = 'password'><br>
+			<input type = 'submit' value = 'log in'>
+		</form>
 	</body>
 </html>
