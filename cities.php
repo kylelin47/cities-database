@@ -3,12 +3,12 @@
 $connection = oci_connect($username = 'kylin',
                           $password = 'citiesdatabase',
                           $connection_string = '//oracle.cise.ufl.edu/orcl');
-$statement = oci_parse($connection, 'SELECT '.htmlspecialchars($_POST['attrNames']).' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
+$statement = oci_parse($connection, 'SELECT * FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
 oci_execute($statement);
 echo "<html>";
 echo "<head>";
 echo "<script src='sorttable.js' type='text/javascript'></script>";
-echo "<link rel='stylesheet' href='table_style.css' type='text/css'/>";
+echo "<link rel='stylesheet' href='table_styles.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";
 echo "<table border='1' class='sortable'>\n";
