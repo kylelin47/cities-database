@@ -39,3 +39,7 @@ cd..
 cd jojones/public_html/cities-database
 ls should then show all our relevant files  
 
+TO MAKE YOUR OWN WEBSITE ON CISE SERVERS:
+=========================================
+Follow the steps here: http://www.cise.ufl.edu/~mschneid/Teaching/CIS4301_Fall2014/php_oracle_help.txt
+
