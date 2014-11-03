@@ -36,6 +36,6 @@ Login as yourself
 You should be apart of the citiesdatabase group, which you can check by typing "groups"  
 To go to my public_html directory (where the files are), simply:  
 cd..  
-cd jojones/public_html  
+cd jojones/public_html/cities-database
 ls should then show all our relevant files  
 
