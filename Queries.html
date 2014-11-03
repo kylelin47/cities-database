@@ -1,9 +1,9 @@
 <!doctype html>
-
 <html>
+<head>
 	<title>Queries</title>
-	<link rel = "stylesheet" href = "standard.css" type = "text/css" />
-	
+	<link rel = "stylesheet" href = "styles/standard.css" type = "text/css" />
+</head>	
 	<body>
 		<h2>Queries</h2>
 
@@ -15,6 +15,16 @@
 				<li><a href = "Queries.html">Queries</a></li>
 				<li><a href = "User.html">User</a></li>
 			</ul>
+			<form action="cities.php" method="post" target="_blank">
+				Check which results you would like to see: <br />
+				<input type="checkbox" name="attributes[]" value="asciiname" />Name<br />
+				<input type="checkbox" name="attributes[]" value="Country" />Country<br />
+				<input type="checkbox" name="attributes[]" value="population" />Population<br />
+				<input type="checkbox" name="attributes[]" value="elevation" />Elevation<br />
+				<input type="checkbox" name="attributes[]" value="latitude" />Latitude<br />
+				<input type="checkbox" name="attributes[]" value="longitude" />Longitude<br />
+				<input type="submit" />
+			</form>
 		</div>
 		<p> insert box here</p>
 	</body>

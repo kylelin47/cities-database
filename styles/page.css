@@ -1,6 +1,6 @@
 body{
 
-	background: url("image/city.jpg") no-repeat center center fixed;
+	background: url("../image/city.jpg") no-repeat center center fixed;
 	background-size: cover;
 /*
 	position:relative;
@@ -9,7 +9,7 @@ body{
 	right:100px;
 	top:200px;
 	bottom:200px;
-	background:url("image/background4.jpg") no-repeat center center fixed;	
+	background:url("../image/background4.jpg") no-repeat center center fixed;	
 	background-size: cover;
 */
 }
@@ -37,7 +37,7 @@ h3.author{
 }
 
 #middle{
-	background: url("image/background4.jpg") no-repeat center center fixed;	
+	background: url("../image/background4.jpg") no-repeat center center fixed;	
 	background-size: cover;
 	position: fixed;
 	margin: 2% 10%; 
@@ -235,7 +235,7 @@ a.notification:hover span{
 	background: none;
 }
 #footer_menu .homeButton a{
-	background: url("image/noGlass.png") top left no-repeat;
+	background: url("../image/noGlass.png") top left no-repeat;
 	background-size: cover;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
