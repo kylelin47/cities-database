@@ -6,7 +6,7 @@ $connection = oci_connect($username,
                           $connection_string);
 $cityName = $_POST['cityName'];
 $query = "SELECT asciiname, country, population, elevation, latitude, longitude FROM cities WHERE
-          asciiname='" . $cityName . "'";
+          asciiname LIKE '%" . $cityName . "%'";
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
