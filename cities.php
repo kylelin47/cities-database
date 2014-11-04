@@ -60,7 +60,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     }
     $degrees = floor($latitude);
     $minutes = ($latitude - $degrees) * 60;
-    $latitude = $degrees . '&deg;' . $minutes . '\'' . $NoS;
+    $latitude = $degrees . '&deg;' . $minutes . $NoS;
     if ($longitude < 0)
     {
             $WoE = 'W';
@@ -70,7 +70,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     }
     $degrees = floor($longitude);
     $minutes = ($longitude - $degrees) * 60;
-    $longitude = $degrees . '&deg;' . $minutes . '\'' . $WoE;
+    $longitude = $degrees . '&deg;' . $minutes . $WoE;
     $mapcoord = $latitude.'+'.$longitude;
     echo "	<td><form action = 'http://google.com/maps/place/".$mapcoord."/'><input type='submit' value = 'Map'></form></td>\n";
     echo "<td>".$mapcoord."</td>\n";
