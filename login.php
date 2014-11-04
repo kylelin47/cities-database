@@ -1,16 +1,20 @@
 <?php
 include "database.php";
-$connection = oci_connect($username,
-                          $password,
-                          $connection_string);
+
+                         
+$UserLogin = $_POST['username'];
+$UserPass = $_POST['password'];
  
- if ($connection){
- 	
- 	
+ if ($UserLogin && $UserPass){
+     $connection = oci_connect($username, $password, $connection_string) or die ("False connection");
+     ori_select_db('Login') or die("False DB");
  }
  
- else 
- 	die("No Connection");
+ else {
+  die("No Connection");                        
+                           
+ }
+ 
 
 
  //
