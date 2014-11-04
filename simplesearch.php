@@ -4,9 +4,9 @@ include "database.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
-$cityName = $_POST['cityName'];
+$cityName = strtoupper($_POST['cityName']);
 $query = "SELECT asciiname, country, population, elevation, latitude, longitude FROM cities WHERE
-          asciiname LIKE '%" . $cityName . "%'";
+          upper(asciiname) LIKE '%" . $cityName . "%'";
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
