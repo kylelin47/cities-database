@@ -14,11 +14,9 @@ Tutorials:
 PHP and Oracle: http://www.oracle.com/webfolder/technetwork/tutorials/obe/db/oow10/php_db/php_db.htm  
 Drop-down in PHP: http://www.html-form-guide.com/php-form/php-form-select.html  
 SQLLDR log=test.log bad = bad.bad data = cities1000.txt control=create_cities.ctl userid=username/password@orcl  
-  
-TESTING YOUR CHANGES:
+
+GETTING THE FILES
 =============================
-You can upload to your personal website and test it there (remember to set permissions properly for all files!) or download PHP and run a local server.  
-See here for how: http://php.net/manual/en/features.commandline.webserver.php  
 Run
 ```
 git clone https://github.com/kylelin47/cities-database.git
@@ -28,6 +26,11 @@ to get the files initially then
 git pull
 ```
 to update in the future once you already have a repository.
+TESTING YOUR CHANGES:
+=============================
+You can upload to your personal website and test it there (remember to set permissions properly for all files!)  
+(haven't figured this out yet) or download PHP and run a local server.  
+See here for how: http://php.net/manual/en/features.commandline.webserver.php  
 
 HOW TO CREATE FILES AND SUCH:
 =============================
