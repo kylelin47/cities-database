@@ -4,7 +4,6 @@ include "database.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
-//$statement = oci_parse($connection, 'SELECT * FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM Cities ORDER BY population DESC) WHERE ROWNUM<=500');
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
 $N = count($attributes);
@@ -16,7 +15,10 @@ for ($i=0; $i < $N; $i++)
 		$query = $query . ',';
 	}
 }
-$query = $query . ' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM cities ORDER BY population DESC) WHERE ROWNUM<=500';	
+$num_rows_string = (string) $_POST['num_rows'];
+$query = $query . 
+         ' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
+         $num_rows_string;
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
@@ -42,36 +44,39 @@ for ($i=0; $i < $N; $i++)
 	echo "</th>\n";
 }
 echo "</tr>\n";
-echo "<tr>\n";
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
-    $latitude = $row['LATITUDE'];
-    $longitude = $row['LONGITUDE'];
-    if ($latitude < 0)
+    if (isset($row['LATITUDE']) && isset($row['LONGITUDE']))
     {
-            $NoS = 'S';
-            $latitude = abs($latitude);
-    } else {
-            $NoS = 'N';
+        $latitude = $row['LATITUDE'];
+        $longitude = $row['LONGITUDE'];
+        if ($latitude < 0)
+        {
+                $NoS = 'S';
+                $latitude = abs($latitude);
+        } else {
+                $NoS = 'N';
+        }
+        $degrees = floor($latitude);
+        $minutes = ($latitude - $degrees) * 60;
+        $latitude = $degrees . '&deg;' . $minutes . $NoS;
+        if ($longitude < 0)
+        {
+                $WoE = 'W';
+                $longitude = abs($longitude);
+        } else {
+                $WoE = 'E';
+        }
+        $degrees = floor($longitude);
+        $minutes = ($longitude - $degrees) * 60;
+        $longitude = $degrees . '&deg;' . $minutes . $WoE;
+        $mapcoord = $latitude.'+'.$longitude;
+        echo "    <td align='center'><form action = 'http://google.com/maps/place/".$mapcoord.
+             "/' target='_blank'><input type='submit' value = 'Google Maps'></form></td>\n";
     }
-    $degrees = floor($latitude);
-    $minutes = ($latitude - $degrees) * 60;
-    $latitude = $degrees . '&deg;' . $minutes . $NoS;
-    if ($longitude < 0)
-    {
-            $WoE = 'W';
-            $longitude = abs($longitude);
-    } else {
-            $WoE = 'E';
-    }
-    $degrees = floor($longitude);
-    $minutes = ($longitude - $degrees) * 60;
-    $longitude = $degrees . '&deg;' . $minutes . $WoE;
-    $mapcoord = $latitude.'+'.$longitude;
-    echo "	<td align='center'><form action = 'http://google.com/maps/place/".$mapcoord."/' target='_blank'><input type='submit' value = 'Google Maps'></form></td>\n";
-    // echo "<td>".$mapcoord."</td>\n";
     echo "</tr>\n";
 }
 echo "</table>\n";
