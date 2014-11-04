@@ -29,7 +29,7 @@ to update in the future once you already have a repository.
 TESTING YOUR CHANGES:
 =============================
 You can upload to your personal website and test it there (remember to set permissions properly for all files!)  
-or download PHP, configure PHP, download Oracle Instant Client, and run a local server. Long process, would not recommend.  
+or download PHP, configure PHP, download Oracle Instant Client, and run a local server with Gatorlink VPN. Long process, would not recommend. However, once it's setup it's very convenient. Talk to me (Kyle) in person if you want me to show you how.
 
 HOW TO CREATE FILES AND SUCH:
 =============================
