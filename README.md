@@ -29,8 +29,7 @@ to update in the future once you already have a repository.
 TESTING YOUR CHANGES:
 =============================
 You can upload to your personal website and test it there (remember to set permissions properly for all files!)  
-(haven't figured this out yet) or download PHP and run a local server.  
-See here for how: http://php.net/manual/en/features.commandline.webserver.php  
+or download PHP, configure PHP, download Oracle Instant Client, and run a local server. Long process, would not recommend.  
 
 HOW TO CREATE FILES AND SUCH:
 =============================
