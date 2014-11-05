@@ -10,7 +10,7 @@ $query = $url[query];
 $nmlalo = explode('+', $query); //make array of [name, lat, long]
 //str_replace("%20", " ", nmlalo[0]);
 $query = "SELECT asciiname, country, population, elevation, latitude, longitude FROM cities WHERE
-          asciiname!='".$nmlalo[0]."' AND latitude BETWEEN ".($nmlalo[1]-1)." AND ".($nmlalo[1]+1).
+          latitude BETWEEN ".($nmlalo[1]-1)." AND ".($nmlalo[1]+1).
           " AND longitude BETWEEN ".($nmlalo[2]-1)." AND ".($nmlalo[2]+1);
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
@@ -60,7 +60,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     $mapcoord = $latitude.'+'.$longitude;
     echo "    <td align='center'><form><select name='menu'>\n";
     echo "    <option value='http://google.com/maps/place/".$mapcoord."/'>Google Maps</option>";
-    echo "    <option value='range_cities.php?".$row['ASCIINAME'].'+'.$row['LATITUDE'].'+'.$row['LONGITUDE'],"#'>Within range</option>";
+    echo "    <option value='range_cities.php?".$row['ASCIINAME'].'+'.$row['LATITUDE'].'+'.$row['LONGITUDE'],"#'>Nearby cities</option>";
     echo "    </select>";
     echo "    <input type='button' value='GO' onClick='window.open(this.form.menu.options[this.form.menu.selectedIndex].value);'>";
     echo "    </form></td>";
