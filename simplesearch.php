@@ -53,8 +53,11 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     $minutes = ($longitude - $degrees) * 60;
     $longitude = $degrees . '&deg;' . $minutes . $WoE;
     $mapcoord = $latitude.'+'.$longitude;
-    echo "    <td align='center'><form action = 'http://google.com/maps/place/".$mapcoord.
-         "/' target='_blank'><input type='submit' value = 'Google Maps'></form></td>\n";
+    echo "    <td align='center'><form action=''><select onChange='window.open(this.value)'>\n";
+    echo "    <option value=''>(no action)</option>";
+    echo "    <option value='http://google.com/maps/place/".$mapcoord."/'>Google Maps</option></td>";
+   // echo "    <td align='center'><form action = 'http://google.com/maps/place/".$mapcoord.
+   //      "/' target='_blank'><input type='submit' value = 'Google Maps'></form></td>\n";
     echo "</tr>\n";
 }
 echo "</table>\n";
