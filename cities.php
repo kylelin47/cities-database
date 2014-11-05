@@ -34,13 +34,19 @@ $num_rows_string = (string) $_POST['num_rows'];
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
          $num_rows_string;
+$agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 if (isset($sum_over))
 {
 	$query = $query . " GROUP BY ";
+	$first = 0;
 	for ($k=0; $k<$N; $k++) {
-		if (!in_array($attributes[$k], $sum_over))
+		if (!in_array($attributes[$k], $sum_over)
+		 && !in_array($attributes[$k], $agg_funs))
 		{
-		$query = $query . $attributes[$k];
+			if ($first != 0) {
+			$query = $query . ", "; } 
+			$query = $query . $attributes[$k];
+			$first = 1;
 		}
 	}
 }
@@ -54,7 +60,6 @@ echo "<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet
 echo "<link rel='stylesheet' href='styles/table_styles.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";
-echo $sum_over;
 echo "<table class='sortable'>\n";
 echo "<tr>\n";
 for ($i=0; $i < $N; $i++)
