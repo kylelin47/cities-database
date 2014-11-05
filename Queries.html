@@ -11,22 +11,64 @@
     $(document).ready(function () {
         $('#query').validate({
             rules: {
-                'attributes[]': {required: true}
+                'attributes[]': {required: true},
+                'sum_over[]': {required: true}
             },
             messages: {
-                'attributes[]': {required: "Please select at least one attribute."}
+                'attributes[]': {required: "Please select at least one attribute."},
+                'sum_over[]': {required: "Please select at least one attribute to sum over. <br />"}
             },
             errorPlacement: function(error, element) {
                 if (element.attr( "name" ) === "attributes[]") 
                 {
                     $(element).next().after(error);
                 } 
-                else 
+                else if (element.attr( "name" ) === "sum_over[]")
+                {
+                    error.insertBefore( '#sum' );
+                }
+                else
                 {
                     error.insertAfter( element );
                 }
             }
         });
+        window.onload = function () {
+            var inputs = [document.querySelector('input[id=sum]'),
+                          document.querySelector('input[id=asciiname]'),
+                          document.querySelector('input[id=Country]'),
+                          document.querySelector('input[id=Population]'),
+                          document.querySelector('input[id=Elevation]'),
+                          document.querySelector('input[id=Latitude]'),
+                          document.querySelector('input[id=Longitude]')];
+            function check() 
+            {
+                var a = "";
+                if (inputs[0].checked) 
+                {
+                    for (i = 3; i < 5; ++i)
+                    {
+                        if (!inputs[i].checked)
+                        {
+                            var val = inputs[i].id;
+                            a = a + "<input type='checkbox' name='sum_over[]' value='sum" +
+                                val + "'id='sum" + val + "' />" +
+                                "<label for='sum" + val + "' >" + val + "</label>";
+                            //SUM forms have format: value='sumPopulation' id='sumPopulation'
+                        }
+                    }
+                } 
+                document.getElementById('sum_result').innerHTML = a;
+            }
+            for (i=0; i < 7; i++)
+            {
+                if (i === 0 || i === 3 || i === 4)
+                {
+                    inputs[i].onchange = check;
+                    check();
+                }
+            }
+        }
     });
     </script>
 </head>	
@@ -42,18 +84,22 @@
 			</ul>
 			<form id="query" action="cities.php" method="post" target="_blank">
 				Check which attributes you would like to see: <br />
-				<input type="checkbox" name="attributes[]" value="asciiname" />
+				<input type="checkbox" name="attributes[]" value="asciiname" id="asciiname" />
                 <label for="asciiname">Name</label><br />
-				<input type="checkbox" name="attributes[]" value="Country" />
+				<input type="checkbox" name="attributes[]" value="Country" id="Country" />
                 <label for="Country">Country</label><br />
-				<input type="checkbox" name="attributes[]" value="Population" />
+				<input type="checkbox" name="attributes[]" value="Population" id="Population" />
                 <label for="Population">Population</label><br />
-				<input type="checkbox" name="attributes[]" value="Elevation" />
+				<input type="checkbox" name="attributes[]" value="Elevation" id="Elevation" />
                 <label for="Elevation">Elevation</label><br />
-				<input type="checkbox" name="attributes[]" value="Latitude" />
+				<input type="checkbox" name="attributes[]" value="Latitude" id="Latitude" />
                 <label for="Latitude">Latitude</label><br />
-				<input type="checkbox" name="attributes[]" value="Longitude" />
+				<input type="checkbox" name="attributes[]" value="Longitude" id="Longitude" />
                 <label for="Longitude">Longitude</label><br />
+                <input type="checkbox" name="attributes[]" value="SUM" id="sum" />
+                <label for="SUM">Sum</label>
+                <span id="sum_result"></span>
+                <br />
                 Enter the number of results you would like returned: <br />
                 <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" required /><br />
 				<input type="submit" />

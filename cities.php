@@ -10,6 +10,21 @@ $N = count($attributes);
 for ($i=0; $i < $N; $i++)
 {
 	$query = $query . $attributes[$i];
+    if ($attributes[$i] === 'SUM')
+    {
+        $query = $query . '(';
+        $sum_over = $_POST['sum_over'];
+        $M = count($sum_over);
+        for ($j=0; $j < $M; $i++)
+        {
+            $query = $query . $sum_over[$j];
+            if ($j < $M - 1)
+            {
+                $query = $query . ',';
+            }
+        }
+        $query = $query . ')';
+    }
 	if ($i < $N - 1)
 	{
 		$query = $query . ',';
