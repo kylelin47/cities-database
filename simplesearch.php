@@ -55,12 +55,10 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     $mapcoord = $latitude.'+'.$longitude;
     echo "    <td align='center'><form><select name='menu'>\n";
     echo "    <option value='http://google.com/maps/place/".$mapcoord."/'>Google Maps</option>";
-    echo "    <option value='google.com'>Other</option>";
+    echo "    <option value=''>Other</option>";
     echo "    </select>";
     echo "    <input type='button' value='GO' onClick='window.open(this.form.menu.options[this.form.menu.selectedIndex].value);'>";
     echo "    </form></td>";
-   // echo "    <td align='center'><form action = 'http://google.com/maps/place/".$mapcoord.
-   //      "/' target='_blank'><input type='submit' value = 'Google Maps'></form></td>\n";
     echo "</tr>\n";
 }
 echo "</table>\n";
