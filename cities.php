@@ -25,6 +25,7 @@ oci_execute($statement);
 echo "<html>";
 echo "<head>";
 echo "<script src='sorttable.js' type='text/javascript'></script>";
+echo "<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>";
 echo "<link rel='stylesheet' href='styles/table_styles.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";

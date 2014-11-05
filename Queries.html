@@ -3,6 +3,7 @@
 <head>
 	<title>Queries</title>
 	<link rel = "stylesheet" href = "styles/standard.css" type = "text/css" />
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <script src="jquery.validate.min.js" type="text/javascript"></script>
     <script src="additional-methods.min.js" type="text/javascript"></script>
@@ -13,12 +14,12 @@
                 'attributes[]': {required: true}
             },
             messages: {
-                'attributes[]': {required: "Please select at least one attribute <br />"}
+                'attributes[]': {required: "Please select at least one attribute."}
             },
             errorPlacement: function(error, element) {
                 if (element.attr( "name" ) === "attributes[]") 
                 {
-                    error.insertBefore(element);
+                    $(element).next().after(error);
                 } 
                 else 
                 {
@@ -31,7 +32,6 @@
 </head>	
 	<body>
 		<h2>Queries</h2>
-
 		<div id = "box">
 			<ul id = "toolBar">
 				<li><a href = "index.html">Home</a></li>
@@ -42,14 +42,20 @@
 			</ul>
 			<form id="query" action="cities.php" method="post" target="_blank">
 				Check which attributes you would like to see: <br />
-				<label><input type="checkbox" name="attributes[]" value="asciiname" />Name</label><br />
-				<label><input type="checkbox" name="attributes[]" value="Country" />Country</label><br />
-				<label><input type="checkbox" name="attributes[]" value="Population" />Population</label><br />
-				<label><input type="checkbox" name="attributes[]" value="Elevation" />Elevation</label><br />
-				<label><input type="checkbox" name="attributes[]" value="Latitude" />Latitude</label><br />
-				<label><input type="checkbox" name="attributes[]" value="Longitude" />Longitude</label><br />
+				<input type="checkbox" name="attributes[]" value="asciiname" />
+                <label for="asciiname">Name</label><br />
+				<input type="checkbox" name="attributes[]" value="Country" />
+                <label for="Country">Country</label><br />
+				<input type="checkbox" name="attributes[]" value="Population" />
+                <label for="Population">Population</label><br />
+				<input type="checkbox" name="attributes[]" value="Elevation" />
+                <label for="Elevation">Elevation</label><br />
+				<input type="checkbox" name="attributes[]" value="Latitude" />
+                <label for="Latitude">Latitude</label><br />
+				<input type="checkbox" name="attributes[]" value="Longitude" />
+                <label for="Longitude">Longitude</label><br />
                 Enter the number of results you would like returned: <br />
-                <input type="number" size="6" name="num_rows" min="1" max="100000" value="500"><br />
+                <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" required /><br />
 				<input type="submit" />
 			</form>
 		</div>

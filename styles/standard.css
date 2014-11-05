@@ -1,5 +1,7 @@
 body{
 	background-color: rgba(209,209,209,0.2);
+    font-size:1em;
+    font-family: "Ubuntu", sans-serif;
 }
 
 h2{
@@ -52,6 +54,11 @@ h2{
 
 #toolBar li:hover{
 	background-color: rgba(0,0,0,0.1);
-
 }
-
+label.error {
+    margin-left: 20px;
+    background-color: #f5dfdf;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size:0.9em;
+}
