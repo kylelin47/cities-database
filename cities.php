@@ -15,7 +15,7 @@ for ($i=0; $i < $N; $i++)
         $query = $query . '(';
         $sum_over = $_POST['sum_over'];
         $M = count($sum_over);
-        for ($j=0; $j < $M; $i++)
+        for ($j=0; $j < $M; $j++)
         {
             $query = $query . $sum_over[$j];
             if ($j < $M - 1)
@@ -34,6 +34,16 @@ $num_rows_string = (string) $_POST['num_rows'];
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, elevation, latitude, longitude FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
          $num_rows_string;
+if (isset($sum_over))
+{
+	$query = $query . " GROUP BY ";
+	for ($k=0; $k<$N; $k++) {
+		if (!in_array($attributes[$k], $sum_over))
+		{
+		$query = $query . $attributes[$k];
+		}
+	}
+}
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
@@ -44,6 +54,7 @@ echo "<link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet
 echo "<link rel='stylesheet' href='styles/table_styles.css' type='text/css'/>";
 echo "</head>\n";
 echo "<body>";
+echo $sum_over;
 echo "<table class='sortable'>\n";
 echo "<tr>\n";
 for ($i=0; $i < $N; $i++)
