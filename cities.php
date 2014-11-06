@@ -86,7 +86,12 @@ for ($i=0; $i < $N; $i++)
 		echo $attributes[$i];
         if ($attributes[$i] == 'SUM')
         {
-            echo " " . $sum_over[$sumCount];
+	    $att = $sum_over[$sumCount];
+	    if ($att === 'dem')
+	    {
+	    	$att = 'Elevation';
+ 	    }
+            echo " " . $att;
             $sumCount = $sumCount + 1;
             if ($sumCount < $M)
             {
