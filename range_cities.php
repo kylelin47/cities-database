@@ -4,14 +4,14 @@ include "database.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
-$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-$url = parse_url($url);
-$query = $url[query];
-$nmlalo = explode('+', $query); //make array of [name, lat, long]
+//$url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//$url = parse_url($url);
+//$query = $url[query];
+//$nmlalo = explode('+', $query); //make array of [name, lat, long]
 //str_replace("%20", " ", nmlalo[0]);
 $query = "SELECT asciiname, country, population, elevation, latitude, longitude FROM cities WHERE
-          latitude BETWEEN ".($nmlalo[1]-1)." AND ".($nmlalo[1]+1).
-          " AND longitude BETWEEN ".($nmlalo[2]-1)." AND ".($nmlalo[2]+1);
+          latitude BETWEEN ".((float)$_GET['latitude']-1)." AND ".((float)$_GET['latitude']+1).
+          " AND longitude BETWEEN ".((float)$_GET['longitude']-1)." AND ".((float)$_GET['longitude']+1);
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
