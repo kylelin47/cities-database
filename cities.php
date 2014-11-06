@@ -12,18 +12,18 @@ for ($i=0; $i < $N; $i++)
 	$query = $query . $attributes[$i];
     if ($attributes[$i] === 'SUM')
     {
-        $query = $query . '(';
         $sum_over = $_POST['sum_over'];
         $M = count($sum_over);
         for ($j=0; $j < $M; $j++)
         {
+            $query = $query . '(';
             $query = $query . $sum_over[$j];
+            $query = $query . ')';
             if ($j < $M - 1)
             {
-                $query = $query . ',';
+                $query = $query . ', SUM';
             }
         }
-        $query = $query . ')';
     }
 	if ($i < $N - 1)
 	{
@@ -37,14 +37,17 @@ $query = $query .
 $agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 if (isset($sum_over))
 {
-	$query = $query . " GROUP BY ";
 	$first = 0;
 	for ($k=0; $k<$N; $k++) {
 		if (!in_array($attributes[$k], $sum_over)
 		 && !in_array($attributes[$k], $agg_funs))
 		{
 			if ($first != 0) {
-			$query = $query . ", "; } 
+			$query = $query . ", "; }
+            else
+            {
+            	$query = $query . " GROUP BY ";
+            }
 			$query = $query . $attributes[$k];
 			$first = 1;
 		}
@@ -62,6 +65,7 @@ echo "</head>\n";
 echo "<body>";
 echo "<table class='sortable'>\n";
 echo "<tr>\n";
+$sumCount = 0;
 for ($i=0; $i < $N; $i++)
 {
 	echo "<th>";
@@ -76,6 +80,15 @@ for ($i=0; $i < $N; $i++)
 	else
 	{
 		echo $attributes[$i];
+        if ($attributes[$i] == 'SUM')
+        {
+            echo " " . $sum_over[$sumCount];
+            $sumCount = $sumCount + 1;
+            if ($sumCount < $M)
+            {
+                $i = $i - 1;
+            }
+        }
 	}
 	echo "</th>\n";
 }

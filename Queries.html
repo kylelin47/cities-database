@@ -53,9 +53,8 @@
                         {
                             var val = inputs[i].id;
                             a = a + "<input type='checkbox' name='sum_over[]' value='" +
-                                val + "'id='" + val + "' />" +
-                                "<label for='" + val + "' >" + val + "</label>";
-                            //SUM forms have format: value='sumPopulation' id='sumPopulation'
+                                val + "'id='sum" + val + "' />" +
+                                "<label for='sum" + val + "' >" + val + "</label>";
                         }
                     }
                 } 
@@ -100,7 +99,7 @@
                 <input type="checkbox" name="attributes[]" value="time_zone" id="time_zone" />
                 <label for="time_zone">Time Zone</label><br />
                 <input type="checkbox" name="attributes[]" value="SUM" id="sum" />
-                <label for="SUM">Sum</label>
+                <label for="sum">Sum</label>
                 <span id="sum_result"></span>
                 <br />
                 Enter the number of results you would like returned: <br />
