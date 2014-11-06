@@ -12,10 +12,11 @@
         if (document.querySelector('input[id=Population]').checked &&
             document.querySelector('input[id=Elevation]').checked)
         {
-            return this.optional(element) || !(document.querySelector('input[id=sum]').checked);
+            return this.optional(element) || !(document.querySelector('input[id=sum]').checked)
+	    || !(document.querySelector('input[id=avg]').checked);
         }
         return true;
-    }, "Nothing to sum over.");
+    }, "Nothing to perform aggregate function over.");
     $(document).ready(function () {
         $('#query').validate({
             rules: {
@@ -46,6 +47,7 @@
         });
         window.onload = function () {
             var inputs = [document.querySelector('input[id=sum]'),
+			  document.querySelector('input[id=avg]'),
                           document.querySelector('input[id=asciiname]'),
                           document.querySelector('input[id=Country]'),
                           document.querySelector('input[id=Population]'),
@@ -58,7 +60,7 @@
                 var a = "";
                 if (inputs[0].checked) 
                 {
-                    for (i = 3; i < 5; ++i)
+                    for (i = 4; i < 6; ++i)
                     {
                         if (!inputs[i].checked)
                         {
@@ -71,9 +73,9 @@
                 } 
                 document.getElementById('sum_result').innerHTML = a;
             }
-            for (i=0; i < 7; i++)
+            for (i=0; i < 9; i++)
             {
-                if (i === 0 || i === 3 || i === 4)
+                if (i === 0 || i === 1 || i === 4 || i === 5)
                 {
                     inputs[i].onchange = check;
                     check();
@@ -111,7 +113,10 @@
                 <label for="time_zone">Time Zone</label><br />
                 <input type="checkbox" name="attributes[]" value="SUM" id="sum" />
                 <label for="sum">Sum</label>
-                <span id="sum_result"></span>
+                <span id="sum_result"></span><br />
+		<input type="checkbox" name="attributes[]" value="AVG" id="avg" />
+		<label for="avg">Average</label>
+		<span id="avg_result"></span>
                 <br />
                 Enter the number of results you would like returned: <br />
                 <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" required /><br />

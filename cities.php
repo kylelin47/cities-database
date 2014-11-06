@@ -7,10 +7,12 @@ $connection = oci_connect($username,
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
 $N = count($attributes);
+$agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 for ($i=0; $i < $N; $i++)
 {
 	$query = $query . $attributes[$i];
-    if ($attributes[$i] === 'SUM')
+    $agg_fun = $attributes[$i];
+    if (in_array($attributes[$i], $agg_funs))
     {
         $sum_over = $_POST['sum_over'];
         $M = count($sum_over);
@@ -21,7 +23,7 @@ for ($i=0; $i < $N; $i++)
             $query = $query . ')';
             if ($j < $M - 1)
             {
-                $query = $query . ', SUM';
+                $query = $query . ', ' . $agg_fun;
             }
         }
     }
@@ -34,7 +36,6 @@ $num_rows_string = (string) $_POST['num_rows'];
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
          $num_rows_string;
-$agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 if (isset($sum_over))
 {
 	$first = 0;
