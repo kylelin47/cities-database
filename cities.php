@@ -32,7 +32,7 @@ for ($i=0; $i < $N; $i++)
 }
 $num_rows_string = (string) $_POST['num_rows'];
 $query = $query . 
-         ' FROM (SELECT asciiname, country, population, elevation, latitude, longitude, time_zone FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
+         ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
          $num_rows_string;
 $agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 if (isset($sum_over))
@@ -76,6 +76,10 @@ for ($i=0; $i < $N; $i++)
     else if ($attributes[$i] == 'time_zone')
 	{
 		echo "Time Zone";
+	}
+    else if ($attributes[$i] == 'dem')
+	{
+		echo "Elevation";
 	}
 	else
 	{

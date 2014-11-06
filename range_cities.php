@@ -10,7 +10,7 @@ $connection = oci_connect($username,
 //$nmlalo = explode('+', $query); //make array of [name, lat, long]
 //str_replace("%20", " ", nmlalo[0]);
 //htmlspecialchars_decode($_GET['name']);
-$query = "SELECT asciiname, country, population, elevation, latitude, longitude FROM cities WHERE
+$query = "SELECT asciiname, country, population, dem, latitude, longitude FROM cities WHERE
           latitude BETWEEN ".((float)$_GET['latitude']-1)." AND ".((float)$_GET['latitude']+1).
           " AND longitude BETWEEN ".((float)$_GET['longitude']-1)." AND ".((float)$_GET['longitude']+1);
 $statement = oci_parse($connection, $query);

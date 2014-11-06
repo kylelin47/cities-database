@@ -14,6 +14,7 @@
         {
             return this.optional(element) || !(document.querySelector('input[id=sum]').checked);
         }
+        return true;
     }, "Nothing to sum over.");
     $(document).ready(function () {
         $('#query').validate({
@@ -48,7 +49,7 @@
                           document.querySelector('input[id=asciiname]'),
                           document.querySelector('input[id=Country]'),
                           document.querySelector('input[id=Population]'),
-                          document.querySelector('input[id=Elevation]'),
+                          document.querySelector('input[id=dem]'),
                           document.querySelector('input[id=Latitude]'),
                           document.querySelector('input[id=Longitude]'),
                           document.querySelector('input[id=time_zone]')];
@@ -100,8 +101,8 @@
                 <label for="Country">Country</label><br />
 				<input type="checkbox" name="attributes[]" value="Population" id="Population" />
                 <label for="Population">Population</label><br />
-				<input type="checkbox" name="attributes[]" value="Elevation" id="Elevation" />
-                <label for="Elevation">Elevation</label><br />
+				<input type="checkbox" name="attributes[]" value="dem" id="dem" />
+                <label for="dem">Elevation</label><br />
 				<input type="checkbox" name="attributes[]" value="Latitude" id="Latitude" />
                 <label for="Latitude">Latitude</label><br />
 				<input type="checkbox" name="attributes[]" value="Longitude" id="Longitude" />
