@@ -8,10 +8,20 @@
     <script src="jquery.validate.min.js" type="text/javascript"></script>
     <script src="additional-methods.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+    jQuery.validator.addMethod("aggAllowed", function(value, element) {
+        if (document.querySelector('input[id=Population]').checked &&
+            document.querySelector('input[id=Elevation]').checked)
+        {
+            return this.optional(element) || !(document.querySelector('input[id=sum]').checked);
+        }
+    }, "Nothing to sum over.");
     $(document).ready(function () {
         $('#query').validate({
             rules: {
-                'attributes[]': {required: true},
+                'attributes[]': {
+                    required: true,
+                    aggAllowed: true
+                    },
                 'sum_over[]': {required: true}
             },
             messages: {
