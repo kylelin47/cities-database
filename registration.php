@@ -11,7 +11,7 @@ and open the template in the editor.
         $Username = $_POST['Username'];
         $Password = $_POST['Password'];
         $Password1 = $_POST['Password1'];
-        $connection = new oci_collection('localhost','root','','test');
+        $connection = new oci_collection('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         if(!$connection){
             die("connection failed".$connection->connect_error);
         }
