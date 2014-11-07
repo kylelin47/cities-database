@@ -32,10 +32,12 @@ for ($i=0; $i < $N; $i++)
 		$query = $query . ',';
 	}
 }
-$num_rows_string = (string) $_POST['num_rows'];
 $query = $query . 
-         ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC) WHERE ROWNUM<=' .
-         $num_rows_string;
+         ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC)';
+if (!empty($_POST['num_rows']))
+{
+    $query = $query . ' WHERE ROWNUM<=' . (string) $_POST['num_rows'];
+}
 if (isset($sum_over))
 {
 	$first = 0;
