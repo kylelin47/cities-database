@@ -11,7 +11,7 @@ and open the template in the editor.
         $Username = $_POST['Username'];
         $Password = $_POST['Password'];
         $Password1 = $_POST['Password1'];
-        $connection = new mysqli('localhost','root','','test');
+        $connection = new oci_collection('localhost','root','','test');
         if(!$connection){
             die("connection failed".$connection->connect_error);
         }
