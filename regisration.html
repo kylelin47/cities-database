@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+    <?php
+        $submit = $_post['submit'];
+        $FName = $_post['FirstName'];
+        $LName = $_post['LastName'];
+        $Username = $_post['LUsername'];
+        $Password = $_post['Password'];
+        $Password1 = $_post['Password1'];
+        if($submit){
+            //md5
+            echo'$FName/$LName/$Username/$Password/$Password1';
+            
+        }
+    ?>
+<html>
+    <head>
+        <title>Register</title>
+		<link rel = "stylesheet" href = "css/standard.css" type = "text/css" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+		<div id = "box">
+
+        <h3>Thank you choosing our service </h3>
+        <form action = 'registration.php' method = 'POST'>
+            <table>
+                <tr>
+                    <td>Your First Name:</td>
+                    <td><input type = 'text' name = 'FirstName'></td>
+                </tr>
+                <tr>
+                     <td>Your Last Name:</td>
+                    <td><input type = 'text' name = 'LastName'></td>
+                </tr>
+                <tr>
+                    <td>Your Username:</td>
+                    <td><input type = 'text' name = 'Username'></td>
+                </tr>
+                <tr>
+                    <td>Your Password</td>
+                    <td><input type = 'password' name = 'Password'></td>
+                </tr>
+                <tr>
+                    <td>Repeat Password</td>
+                    <td><input type = 'password' name = 'Password1'></td>
+                </tr>
+                <tr>
+                     <td>City you lived in:</td>
+                    <td><input type = 'text' name = 'City'></td>
+                </tr>
+                <tr>
+                    <td>Country you lived in:</td>
+                    <td><input type = 'text' name = 'Country'></td>
+                </tr>
+            </table>
+            <p><input type = 'submit' name = 'submit' value = 'Register'></p>
+
+        </form>
+
+		</div>
+    </body>
+</html>
