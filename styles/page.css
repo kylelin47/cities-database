@@ -22,6 +22,7 @@ body{
 }
 
 .searchform{
+	margin-top: 50px;
     margin: 0 auto;
     width: 70%;
 }
