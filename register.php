@@ -11,12 +11,13 @@ and open the template in the editor.
         $Username = $_POST['Username'];
         $Password = $_POST['Password'];
         $Password1 = $_POST['Password1'];
-        $connection = new oci_collection('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+        $connection = oci_connect('c##qw2','database','localhost/orcl');
         if(!$connection){
             die("connection failed".$connection->connect_error);
         }
-        $sql_User = "SELECT Username FROM login";
-        $result = $connection->query($sql_User);
+        $sql_User =oci_parse($connection, "SELECT Username FROM login");
+        oci_execute($sql_User);
+    
         /*
         if ($result->num_rows > 0) {
     // output data of each row
@@ -28,8 +29,9 @@ and open the template in the editor.
         }
         */
         $temp_result = FALSE;
-        while($row = $result->fetch_assoc()) {
-             if($Username == $row["Username"]){
+        while(($row = oci_fetch_assoc($sql_User))!= FALSE) {
+            // echo $row['USERNAME'];
+             if($Username == $row['USERNAME']){
                  $temp_result = TRUE;
              }
          }
@@ -40,18 +42,19 @@ and open the template in the editor.
             echo '</html>';
         }
         else{
-        $sql = "INSERT INTO login (Username,Password,Fname,Lname) 
-               VALUES ('$Username','$Password','$FName','$LName')";        
-        if($connection->query($sql) == TRUE){
+        $sql = "INSERT INTO login (USERNAME,PASSCODE,FNAME,LNAME) 
+               VALUES ('$Username','$Password','$FName','$LName')";   
+        $sql_User =oci_parse($connection, $sql);
+        if(oci_execute($sql_User) == TRUE){
                 echo "New record created successfully";
         }
         else{
-            echo "Error: " . $sql . "<br>" . $connection->error;
+            echo "Error";
         }
         }
-
-
+        
+        
+        oci_free_statement($sql_User);
+        oci_close($connection);
          
     ?>
-
-
