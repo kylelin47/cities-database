@@ -11,7 +11,7 @@ and open the template in the editor.
         $Username = $_POST['Username'];
         $Password = $_POST['Password'];
         $Password1 = $_POST['Password1'];
-        $connection = oci_connect('c##qw2','database','localhost/orcl');
+        $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         if(!$connection){
             die("connection failed".$connection->connect_error);
         }
@@ -47,6 +47,7 @@ and open the template in the editor.
         $sql_User =oci_parse($connection, $sql);
         if(oci_execute($sql_User) == TRUE){
                 echo "New record created successfully";
+                echo '<a href = "index.html" >Click this Link back to homePage</a>';
         }
         else{
             echo "Error";
