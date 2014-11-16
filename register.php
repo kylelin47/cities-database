@@ -11,7 +11,18 @@ and open the template in the editor.
         $Username = $_POST['Username'];
         $Password = $_POST['Password'];
         $Password1 = $_POST['Password1'];
+        $CITY = $_POST['City'];
+        $COUNTRY =$_POST['Country'];
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+        if($Password != $Password1){
+            echo '<html>';
+            echo '<a href = User.html>Click the following link to return to the previous page.</a>';
+            echo '</html>';
+            echo '<br>';
+            die("Error: missmatched password");
+            
+        }
+        else{
         if(!$connection){
             die("connection failed".$connection->connect_error);
         }
@@ -42,18 +53,19 @@ and open the template in the editor.
             echo '</html>';
         }
         else{
-        $sql = "INSERT INTO login (USERNAME,PASSCODE,FNAME,LNAME) 
-               VALUES ('$Username','$Password','$FName','$LName')";   
+        $sql = "INSERT INTO login (USERNAME,PASSWORD,FNAME,LNAME,CITY,COUNTRY) 
+               VALUES ('$Username','$Password','$FName','$LName','$CITY','$COUNTRY')";   
         $sql_User =oci_parse($connection, $sql);
         if(oci_execute($sql_User) == TRUE){
                 echo "New record created successfully";
+                echo "<br>";
                 echo '<a href = "index.html" >Click this Link back to homePage</a>';
         }
         else{
             echo "Error";
         }
         }
-        
+        }
         
         oci_free_statement($sql_User);
         oci_close($connection);
