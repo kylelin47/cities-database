@@ -41,7 +41,7 @@ if($User_username && $User_password ){
              echo '<html>';
              echo "Welcom Back Administrator:"." &nbsp". $FN.",".$LA;
              echo '<br>';
-             echo '<a href = "Admin.php" >Click this Link back to ADMIN page</a>';
+             echo '<a href = "Admin.html" >Click this Link back to ADMIN page</a>';
              echo '</html>';                 
                  
              }

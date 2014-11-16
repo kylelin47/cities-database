@@ -55,7 +55,7 @@ and open the template in the editor.
         else{
             //determine is_admin
             
-        if($COUNTRY = "admin"){
+        if($COUNTRY == "admin"){
             $is_admin = 1;
         }
         else{
