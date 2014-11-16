@@ -13,7 +13,9 @@
             document.querySelector('input[id=Elevation]').checked)
         {
             return this.optional(element) || !(document.querySelector('input[id=sum]').checked)
-                   || !(document.querySelector('input[id=avg]').checked);
+                   || !(document.querySelector('input[id=avg]').checked)
+                   || !(document.querySelector('input[id=min]').checked)
+                   || !(document.querySelector('input[id=max]').checked);
         }
         return true;
     }, "Nothing to perform aggregate function over.");
