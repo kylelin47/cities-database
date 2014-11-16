@@ -46,21 +46,21 @@
             }
         });
         window.onload = function () {
-            var inputs = [document.querySelector('input[id=sum]'),
-                          document.querySelector('input[id=avg]'),
-                          document.querySelector('input[id=asciiname]'),
+            var inputs = [document.querySelector('input[id=asciiname]'),
                           document.querySelector('input[id=Country]'),
                           document.querySelector('input[id=Population]'),
                           document.querySelector('input[id=Elevation]'),
                           document.querySelector('input[id=Latitude]'),
                           document.querySelector('input[id=Longitude]'),
-                          document.querySelector('input[id=time_zone]')];
+                          document.querySelector('input[id=time_zone]'),
+                          document.querySelector('input[id=sum]'),
+                          document.querySelector('input[id=avg]')];
             function check() 
             {
                 var a = "";
-                if (inputs[0].checked) 
+                if (inputs[7].checked) 
                 {
-                    for (i = 4; i < 6; ++i)
+                    for (i = 2; i < 4; ++i)
                     {
                         if (!inputs[i].checked)
                         {
@@ -73,9 +73,9 @@
                 }
                 document.getElementById('sum_result').innerHTML = a;
                 var b = "";
-                if (inputs[1].checked)
+                if (inputs[8].checked)
                 {
-                    for (i = 4; i < 6; ++i)
+                    for (i = 2; i < 4; ++i)
                     {
                         if (!inputs[i].checked)
                         {
@@ -88,7 +88,7 @@
                 }
                 document.getElementById('avg_result').innerHTML = b;
 
-                for (i = 2; i < inputs.length; ++i)
+                for (i = 0; i < 7; ++i)
                 {
                     var textBoxHTML = "";
                     var spanName = inputs[i].id + "Where";
@@ -119,7 +119,7 @@
 			</ul>
 			<form id="query" action="cities.php" method="post" target="_blank">
 				Check which attributes you would like to see: <br />
-				<input type="checkbox" name="attributes[]" value="asciiname" id="asciiname" onchange="check()" />
+				<input type="checkbox" name="attributes[]" value="asciiname" id="asciiname" />
                 <label for="asciiname">Name</label>
                 <span id="asciinameWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Country" id="Country" />
