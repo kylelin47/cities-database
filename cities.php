@@ -268,11 +268,18 @@ for ($i=0; $i < $att_count; $i++)
 	echo "</th>\n";
 }
 echo "</tr>\n";
+$totalpop = 0;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
+
+    if (isset($row['POPULATION']))
+    {
+	$totalpop = $totalpop + $row['POPULATION'];
+    }
+
     if (isset($row['LATITUDE']) && isset($row['LONGITUDE']))
     {
         $latitude = $row['LATITUDE'];
@@ -306,6 +313,9 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "    </form></td>";
     }
     echo "</tr>\n";
+}
+if ($totalpop > 0) {
+    echo "<tfoot><tr><td><b>Total Population: " . $totalpop . "</b></td></tr></tfoot>";
 }
 echo "</table>\n";
 echo $query;
