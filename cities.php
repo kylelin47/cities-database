@@ -104,7 +104,6 @@ if (!empty($_POST['wheres']))
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
     {
-        print_r($wheres[$possible_attributes[$i]]);
         if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $valid_entries++;
@@ -122,7 +121,7 @@ if (!empty($_POST['wheres']))
     $hits = 0;
     for ($i = 0; $i < $attributes_count; $i++)
     {
-        if (!empty($wheres[$possible_attributes[$i]]))
+        if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $selected_attribute = $possible_attributes[$i];
             $selected_where = $wheres[$selected_attribute];
@@ -143,7 +142,7 @@ if (!empty($_POST['wheres']))
                 {
                    $selected_attribute = "dem"; 
                 }
-                $query = $query . $selected_attribute . " BETWEEN " . (string)$selected_where . " AND " . (string)$selected_where2;
+                $query = $query . $selected_attribute . " BETWEEN " . strval($selected_where) . " AND " . strval($selected_where2);
                 $hits++;
                 if ($hits < $valid_entries)
                 {
