@@ -53,8 +53,16 @@ and open the template in the editor.
             echo '</html>';
         }
         else{
-        $sql = "INSERT INTO login (USERNAME,PASSWORD,FNAME,LNAME,CITY,COUNTRY) 
-               VALUES ('$Username','$Password','$FName','$LName','$CITY','$COUNTRY')";   
+            //determine is_admin
+            
+        if($COUNTRY = "admin"){
+            $is_admin = 1;
+        }
+        else{
+            $is_admin = 0;
+        }
+        $sql = "INSERT INTO login (USERNAME,PASSWORD,FNAME,LNAME,CITY,COUNTRY,is_admin) 
+               VALUES ('$Username','$Password','$FName','$LName','$CITY','$COUNTRY','$is_admin')";   
         $sql_User =oci_parse($connection, $sql);
         if(oci_execute($sql_User) == TRUE){
                 echo "New record created successfully";
