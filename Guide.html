@@ -16,26 +16,36 @@
 				<li><a href = "User.html">User</a></li>
 			</ul>
 			
-			<p>
-				This site is a group project for class CIS4301(Database)<br>
-				Our database is constructed based on the data we download from ()<br>
-				The purpose of this website if for user to easily access our available Queries. 
-			</p>
-			
-			<p>
-				If you like to enter out available Queries.<br>
-				You can click the Queries button located in the tool bar on any page, which will direct you to the Queries page.
-			</p>
-			
-			<p>
-				If you like to see our Frequently Asked Questions(FAQ).<br>
-				You can click the FAQ button located in the tool bar on any pages, which will direct you the FAQ page.
-			</p>
-			
-			<p>
-				If you like to sign up on our site, which will allow to see more of our interesting features.<br>
-				You can click the User button located in the tool bar on any pages, which will direct you the User page.
-			</p>
+			<h2><center>Website Guide</center></h2>
+<p>&nbsp &nbsp This website is purely class use. This version is the final product of class project for CIS4301 – database. 
+It is created by student Joachim Jones, Jinchi Lin, Kyle Lin, Qian Wang.  
+Thus &copy Joachim Jones, Jinchi Lin, Kyle Lin, Qian Wang
+<br>
+&nbsp &nbspFor this site, we&#39ve decided on storing the geographic and population statistics of cities in our database. 
+Specifically, we&#39ll be retrieving the text files from geonames.org pertaining to cities. 
+The data are subdivided into three categories: cities with population over one thousand, five thousand,
+and fifteen thousand, mutually exclusive. Each city detailed in the data has a unique ID, name,
+list of alternate names, latitude, longitude, country, population, elevation, and time zone.
+Furthermore, tuples referring to major cities can be extended through use of the landmarks data set that 
+provides name, location, and type of notable places sorted by city.
+<br>
+&nbsp &nbsp We&#39ve decided on this data set because the attributes of cities have a lot of 
+interconnectivity and dependencies that are not immediately obvious and cannot be determined through
+small scale comparisons. They instead require analysis of large amounts of data and large numbers of
+comparisons between attributes. A database is ideal for this task, and proper queries would give answers
+to a lot of interesting questions. 
+<br>
+&nbsp &nbsp Cities have the additional benefit that many of its attributes are both quantitative and hierarchical:
+the city with the largest number in the population column has the largest population, the city with
+the largest latitude is the furthest north. This allows for easy, valid comparisons within large data sets 
+and is very helpful in statistical analysis. In contrast, some data sets (like music) contain attributes like
+tone and loudness that are quantitative but have little meaning when compared to others in the data set,
+and are more akin to qualitative categorizations.
+<br>
+&nbsp&nbspThe data set we&#39ll be using is updated with new information and checked for errors frequently, 
+and preliminary analysis points toward the formatting being highly structured and amenable to being 
+read directly into a database with the right program.
+</p>
 		</div>
 	</body>
 </html>
