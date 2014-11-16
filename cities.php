@@ -6,31 +6,86 @@ $connection = oci_connect($username,
                           $connection_string);
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
-$N = count($attributes);
+$att_count = count($attributes);
 $agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
-for ($i=0; $i < $N; $i++)
+for ($i=0; $i < $att_count; $i++)
 {
-	$query = $query . $attributes[$i];
     $agg_fun = $attributes[$i];
     if (in_array($attributes[$i], $agg_funs))
     {
         $sum_over = $_POST['sum_over'];
-        $M = count($sum_over);
-        for ($j=0; $j < $M; $j++)
+        $avg_over = $_POST['avg_over'];
+        $min_over = $_POST['min_over'];
+        $max_over = $_POST['max_over'];
+        if ($attributes[$i] == 'SUM')
         {
-            $query = $query . '(';
-            $query = $query . $sum_over[$j];
-            $query = $query . ')';
-            if ($j < $M - 1)
+            $query = $query . $attributes[$i];
+            $sum_count = count($sum_over);
+            for ($j=0; $j < $sum_count; $j++)
             {
-                $query = $query . ', ' . $agg_fun;
+                $query = $query . '(';
+                $query = $query . $sum_over[$j];
+                $query = $query . ')';
+                if ($j < $sum_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+        }
+        else if ($attributes[$i] == 'AVG')
+        {
+            $query = $query . "floor(" . $attributes[$i];
+            $avg_count = count($avg_over);
+            for ($k=0; $k < $avg_count; $k++)
+            {
+                $query = $query . '(';
+                $query = $query . $avg_over[$k];
+                $query = $query . ')';
+                if ($k < $avg_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+            $query = $query . ")";
+        }
+        else if ($attributes[$i] == 'MIN')
+        {
+            $query = $query . $attributes[$i];
+            $min_count = count($min_over);
+            for ($k=0; $k < $min_count; $k++)
+            {
+                $query = $query . '(';
+                $query = $query . $min_over[$k];
+                $query = $query . ')';
+                if ($k < $min_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+        }
+        else if ($attributes[$i] == 'MAX')
+        {
+            $query = $query . $attributes[$i];
+            $max_count = count($max_over);
+            for ($k=0; $k < $max_count; $k++)
+            {
+                $query = $query . '(';
+                $query = $query . $max_over[$k];
+                $query = $query . ')';
+                if ($k < $max_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
             }
         }
     }
-	if ($i < $N - 1)
-	{
-		$query = $query . ',';
-	}
+    else {
+        $query = $query . $attributes[$i];
+    }
+    if ($i < $att_count - 1)
+    {
+    	$query = $query . ',';
+    }
 }
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC)';
@@ -93,11 +148,14 @@ if (!empty($_POST['wheres']))
         }
     }
 }
-if (isset($sum_over))
+if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over))
 {
 	$first = 0;
-	for ($k=0; $k<$N; $k++) {
+	for ($k = 0; $k < $att_count; $k++) {
 		if (!in_array($attributes[$k], $sum_over)
+		 && !in_array($attributes[$k], $avg_over)
+         && !in_array($attributes[$k], $min_over)
+         && !in_array($attributes[$k], $max_over)
 		 && !in_array($attributes[$k], $agg_funs))
 		{
 			if ($first != 0) {
@@ -123,8 +181,11 @@ echo "</head>\n";
 echo "<body>";
 echo "<table class='sortable'>\n";
 echo "<tr>\n";
-$sumCount = 0;
-for ($i=0; $i < $N; $i++)
+$sumC = 0;
+$avgC = 0;
+$minC = 0;
+$maxC = 0;
+for ($i=0; $i < $att_count; $i++)
 {
 	echo "<th>";
 	if ($attributes[$i] == 'asciiname')
@@ -144,14 +205,56 @@ for ($i=0; $i < $N; $i++)
 		echo $attributes[$i];
         if ($attributes[$i] == 'SUM')
         {
-	    $att = $sum_over[$sumCount];
-	    if ($att === 'dem')
-	    {
-	    	$att = 'Elevation';
- 	    }
+            $att = $sum_over[$sumC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+                echo " " . $att;
+                $sumC = $sumC + 1;
+                if ($sumC < $sum_count)
+                {
+                    $i = $i - 1;
+                }
+        }
+        else if ($attributes[$i] == 'AVG')
+        {
+            $att = $avg_over[$avgC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
             echo " " . $att;
-            $sumCount = $sumCount + 1;
-            if ($sumCount < $M)
+            $avgC = $avgC + 1;
+            if ($avgC < $avg_count)
+            {
+                $i = $i - 1;
+            }
+        }
+        else if ($attributes[$i] == 'MIN')
+        {
+            $att = $min_over[$minC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+            echo " " . $att;
+            $minC = $minC + 1;
+            if ($minC < $min_count)
+            {
+                $i = $i - 1;
+            }
+        }
+        else if ($attributes[$i] == 'MAX')
+        {
+            $att = $max_over[$maxC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+            echo " " . $att;
+            $maxC = $maxC + 1;
+            if ($maxC < $max_count)
             {
                 $i = $i - 1;
             }
