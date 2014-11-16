@@ -13,7 +13,7 @@
             document.querySelector('input[id=Elevation]').checked)
         {
             return this.optional(element) || !(document.querySelector('input[id=sum]').checked)
-	    || !(document.querySelector('input[id=avg]').checked);
+                   || !(document.querySelector('input[id=avg]').checked);
         }
         return true;
     }, "Nothing to perform aggregate function over.");
@@ -47,7 +47,7 @@
         });
         window.onload = function () {
             var inputs = [document.querySelector('input[id=sum]'),
-			  document.querySelector('input[id=avg]'),
+                          document.querySelector('input[id=avg]'),
                           document.querySelector('input[id=asciiname]'),
                           document.querySelector('input[id=Country]'),
                           document.querySelector('input[id=Population]'),
@@ -70,16 +70,38 @@
                                 "<label for='sum" + val + "' >" + inputs[i].id + "</label>";
                         }
                     }
-                } 
-                document.getElementById('sum_result').innerHTML = a;
-            }
-            for (i=0; i < 9; i++)
-            {
-                if (i === 0 || i === 1 || i === 4 || i === 5)
-                {
-                    inputs[i].onchange = check;
-                    check();
                 }
+                document.getElementById('sum_result').innerHTML = a;
+                var b = "";
+                if (inputs[1].checked)
+                {
+                    for (i = 4; i < 6; ++i)
+                    {
+                        if (!inputs[i].checked)
+                        {
+                            var val = inputs[i].value;
+                            b = b + "<input type='checkbox' name='avg_over[]' value='" +
+                            val + "'id='avg" + val + "' />" +
+                            "<label for='avg" + val + "' >" + inputs[i].id + "</label>";
+                        }
+                    }
+                }
+                document.getElementById('avg_result').innerHTML = b;
+
+                for (i = 2; i < inputs.length; ++i)
+                {
+                    var textBoxHTML = "";
+                    var spanName = inputs[i].id + "Where";
+                    if (inputs[i].checked)
+                    {
+                        textBoxHTML = "<input type='text' name='wheres[]' value='sweg' />";
+                    }
+                    document.getElementById(spanName).innerHTML = textBoxHTML;
+                }
+            }
+            for (i = 0; i < inputs.length; i++)
+            {
+                inputs[i].onchange = check;
             }
         }
     });
@@ -97,14 +119,18 @@
 			</ul>
 			<form id="query" action="cities.php" method="post" target="_blank">
 				Check which attributes you would like to see: <br />
-				<input type="checkbox" name="attributes[]" value="asciiname" id="asciiname" />
-                <label for="asciiname">Name</label><br />
+				<input type="checkbox" name="attributes[]" value="asciiname" id="asciiname" onchange="check()" />
+                <label for="asciiname">Name</label>
+                <span id="asciinameWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Country" id="Country" />
-                <label for="Country">Country</label><br />
+                <label for="Country">Country</label>
+                <span id="CountryWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Population" id="Population" />
-                <label for="Population">Population</label><br />
+                <label for="Population">Population</label>
+                <span id="PopulationWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="dem" id="Elevation" />
-                <label for="Elevation">Elevation</label><br />
+                <label for="Elevation">Elevation</label>
+                <span id="ElevationeWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Latitude" id="Latitude" />
                 <label for="Latitude">Latitude</label><br />
 				<input type="checkbox" name="attributes[]" value="Longitude" id="Longitude" />
@@ -114,10 +140,9 @@
                 <input type="checkbox" name="attributes[]" value="SUM" id="sum" />
                 <label for="sum">Sum</label>
                 <span id="sum_result"></span><br />
-		<input type="checkbox" name="attributes[]" value="AVG" id="avg" />
-		<label for="avg">Average</label>
-		<span id="avg_result"></span>
-                <br />
+                <input type="checkbox" name="attributes[]" value="AVG" id="avg" />
+                <label for="avg">Average</label>
+                <span id="avg_result"></span><br />
                 Enter the maximum number of results you would like returned (leave blank for returning all):  <br />
                 <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" /><br />
 				<input type="submit" />
