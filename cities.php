@@ -79,8 +79,9 @@ for ($i=0; $i < $att_count; $i++)
             }
         }
     }
-    
-    $query = $query . $attributes[$i];
+    else {
+        $query = $query . $attributes[$i];
+    }
     if ($i < $att_count - 1)
     {
     	$query = $query . ',';
