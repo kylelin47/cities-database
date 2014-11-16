@@ -104,24 +104,24 @@ if (!empty($_POST['wheres']))
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
     {
-        if (!empty($wheres[$possible_attributes[$i]]))
+        if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $valid_entries++;
         }
     }
-    if ($firstWhere)
+    if ($firstWhere && $valid_entries > 0)
     {
         $query = $query . ' WHERE ';
         $firstWhere = false;
     }
-    else
+    else if ($valid_entries > 0)
     {
         $query = $query . ' AND ';
     }
     $hits = 0;
     for ($i = 0; $i < $attributes_count; $i++)
     {
-        if (!empty($wheres[$possible_attributes[$i]]))
+        if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $selected_attribute = $possible_attributes[$i];
             $selected_where = $wheres[$selected_attribute];
@@ -138,7 +138,11 @@ if (!empty($_POST['wheres']))
             {
                 $selected_attribute2 = $selected_attribute . '2';
                 $selected_where2 = $wheres[$selected_attribute2];
-                $query = $query . $selected_attribute . " BETWEEN " . (string)$selected_where . " AND " . (string)$selected_where2;
+                if ($selected_attribute == "Elevation")
+                {
+                   $selected_attribute = "dem"; 
+                }
+                $query = $query . $selected_attribute . " BETWEEN " . strval($selected_where) . " AND " . strval($selected_where2);
                 $hits++;
                 if ($hits < $valid_entries)
                 {
@@ -263,11 +267,18 @@ for ($i=0; $i < $att_count; $i++)
 	echo "</th>\n";
 }
 echo "</tr>\n";
+$totalpop = 0;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
+
+    if (isset($row['POPULATION']))
+    {
+	$totalpop = $totalpop + $row['POPULATION'];
+    }
+
     if (isset($row['LATITUDE']) && isset($row['LONGITUDE']))
     {
         $latitude = $row['LATITUDE'];
@@ -301,6 +312,9 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "    </form></td>";
     }
     echo "</tr>\n";
+}
+if ($totalpop > 0) {
+    echo "<tfoot><tr><td><b>Total Population: " . $totalpop . "</b></td></tr></tfoot>";
 }
 echo "</table>\n";
 echo $query;
