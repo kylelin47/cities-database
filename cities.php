@@ -10,14 +10,16 @@ $att_count = count($attributes);
 $agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
 for ($i=0; $i < $att_count; $i++)
 {
-    $query = $query . $attributes[$i];
     $agg_fun = $attributes[$i];
     if (in_array($attributes[$i], $agg_funs))
     {
         $sum_over = $_POST['sum_over'];
         $avg_over = $_POST['avg_over'];
+        $min_over = $_POST['min_over'];
+        $max_over = $_POST['max_over'];
         if ($attributes[$i] == 'SUM')
         {
+            $query = $query . $attributes[$i];
             $sum_count = count($sum_over);
             for ($j=0; $j < $sum_count; $j++)
             {
@@ -32,6 +34,7 @@ for ($i=0; $i < $att_count; $i++)
         }
         else if ($attributes[$i] == 'AVG')
         {
+            $query = $query . "floor(" . $attributes[$i];
             $avg_count = count($avg_over);
             for ($k=0; $k < $avg_count; $k++)
             {
@@ -43,9 +46,11 @@ for ($i=0; $i < $att_count; $i++)
                     $query = $query . ', ' . $agg_fun;
                 }
             }
+            $query = $query . ")";
         }
         else if ($attributes[$i] == 'MIN')
         {
+            $query = $query . $attributes[$i];
             $min_count = count($min_over);
             for ($k=0; $k < $min_count; $k++)
             {
@@ -60,6 +65,7 @@ for ($i=0; $i < $att_count; $i++)
         }
         else if ($attributes[$i] == 'MAX')
         {
+            $query = $query . $attributes[$i];
             $max_count = count($max_over);
             for ($k=0; $k < $max_count; $k++)
             {
@@ -73,7 +79,8 @@ for ($i=0; $i < $att_count; $i++)
             }
         }
     }
-
+    
+    $query = $query . $attributes[$i];
     if ($i < $att_count - 1)
     {
     	$query = $query . ',';
