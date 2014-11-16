@@ -66,65 +66,57 @@
                 {
                     for (i = 2; i < 4; ++i)
                     {
-                        if (!inputs[i].checked)
-                        {
-                            var val = inputs[i].value;
-                            a = a + "<input type='checkbox' name='sum_over[]' value='" +
-                                val + "'id='sum" + val + "' />" +
-                                "<label for='sum" + val + "' >" + inputs[i].id + "</label>";
-                        }
+                        var val = inputs[i].value;
+                        a = a + "<input type='checkbox' name='sum_over[]' value='" +
+                            val + "'id='sum" + val + "' />" +
+                            "<label for='sum" + val + "' >" + inputs[i].id + "</label>";
                     }
                 }
-                document.getElementById('sum_result').innerHTML = a;
+                if (document.getElementById('sum_result').innerHTML == "" || a == "")
+                        document.getElementById('sum_result').innerHTML = a;
                 
                 var b = ""; //avg
                 if (inputs[8].checked)
                 {
                     for (i = 2; i < 4; ++i)
                     {
-                        if (!inputs[i].checked)
-                        {
-                            var val = inputs[i].value;
-                            b = b + "<input type='checkbox' name='avg_over[]' value='" +
-                            val + "'id='avg" + val + "' />" +
-                            "<label for='avg" + val + "' >" + inputs[i].id + "</label>";
-                        }
+                        var val = inputs[i].value;
+                        b = b + "<input type='checkbox' name='avg_over[]' value='" +
+                        val + "'id='avg" + val + "' />" +
+                        "<label for='avg" + val + "' >" + inputs[i].id + "</label>";
+
                     }
                 }
-                document.getElementById('avg_result').innerHTML = b;
+                if (document.getElementById('avg_result').innerHTML == "" || b == "")
+                        document.getElementById('avg_result').innerHTML = b;
                 
                 var c = ""; //min
                 if (inputs[9].checked)
                 {
                     for (i = 2; i < 4; ++i)
                     {
-                        if (!inputs[i].checked)
-                        {
-                            var val = inputs[i].value;
-                            b = b + "<input type='checkbox' name='min_over[]' value='" +
-                            val + "'id='min" + val + "' />" +
-                            "<label for='min" + val + "' >" + inputs[i].id + "</label>";
-                        }
+                        var val = inputs[i].value;
+                        c = c + "<input type='checkbox' name='min_over[]' value='" +
+                        val + "'id='min" + val + "' />" +
+                        "<label for='min" + val + "' >" + inputs[i].id + "</label>";
                     }
                 }
-                document.getElementById('min_result').innerHTML = c;
+                if (document.getElementById('min_result').innerHTML == "" || c == "")
+                        document.getElementById('min_result').innerHTML = c;
                 
                 var d = ""; //max
                 if (inputs[10].checked)
                 {
                     for (i = 2; i < 4; ++i)
                     {
-                        if (!inputs[i].checked)
-                        {
-                            var val = inputs[i].value;
-                            b = b + "<input type='checkbox' name='max_over[]' value='" +
-                            val + "'id='max" + val + "' />" +
-                            "<label for='max" + val + "' >" + inputs[i].id + "</label>";
-                        }
+                        var val = inputs[i].value;
+                        d = d + "<input type='checkbox' name='max_over[]' value='" +
+                        val + "'id='max" + val + "' />" +
+                        "<label for='max" + val + "' >" + inputs[i].id + "</label>";
                     }
                 }
-                document.getElementById('max_result').innerHTML = d;
-
+                if (document.getElementById('max_result').innerHTML == "" || d == "")
+                        document.getElementById('max_result').innerHTML = d;
                 for (i = 0; i < 7; ++i)
                 {
                     var textBoxHTML = "";
@@ -140,8 +132,16 @@
                         {
                         
                             var name = inputs[i].id;
-                            textBoxHTML = "<input type='number' min='0' name='wheres[" + name + "]' /> to " +
-                                          "<input type='number' min='0' name='wheres[" + name + "2]' />";
+                            if (name === "Population")
+                            {
+                                textBoxHTML = "<input type='number' min='0' name='wheres[" + name + "]' /> to " +
+                                              "<input type='number' min='0' name='wheres[" + name + "2]' />";
+                            }
+                            else
+                            {
+                                textBoxHTML = "<input type='number' name='wheres[" + name + "]' /> to " +
+                                              "<input type='number' name='wheres[" + name + "2]' />";
+                            }
                         }
                     }
                     if (document.getElementById(spanName).innerHTML == "" || textBoxHTML == "")

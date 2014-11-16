@@ -104,17 +104,18 @@ if (!empty($_POST['wheres']))
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
     {
-        if (!empty($wheres[$possible_attributes[$i]]))
+        print_r($wheres[$possible_attributes[$i]]);
+        if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $valid_entries++;
         }
     }
-    if ($firstWhere)
+    if ($firstWhere && $valid_entries > 0)
     {
         $query = $query . ' WHERE ';
         $firstWhere = false;
     }
-    else
+    else if ($valid_entries > 0)
     {
         $query = $query . ' AND ';
     }
@@ -138,6 +139,10 @@ if (!empty($_POST['wheres']))
             {
                 $selected_attribute2 = $selected_attribute . '2';
                 $selected_where2 = $wheres[$selected_attribute2];
+                if ($selected_attribute == "Elevation")
+                {
+                   $selected_attribute = "dem"; 
+                }
                 $query = $query . $selected_attribute . " BETWEEN " . (string)$selected_where . " AND " . (string)$selected_where2;
                 $hits++;
                 if ($hits < $valid_entries)
