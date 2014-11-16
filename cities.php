@@ -15,35 +15,63 @@ for ($i=0; $i < $att_count; $i++)
     if (in_array($attributes[$i], $agg_funs))
     {
         $sum_over = $_POST['sum_over'];
-	$avg_over = $_POST['avg_over'];
-	if ($attributes[$i] == 'SUM')
-	{
+        $avg_over = $_POST['avg_over'];
+        if ($attributes[$i] == 'SUM')
+        {
             $sum_count = count($sum_over);
             for ($j=0; $j < $sum_count; $j++)
             {
-            	$query = $query . '(';
-            	$query = $query . $sum_over[$j];
-            	$query = $query . ')';
-            	if ($j < $sum_count - 1)
-            	{
-            	    $query = $query . ', ' . $agg_fun;
-            	}
+                $query = $query . '(';
+                $query = $query . $sum_over[$j];
+                $query = $query . ')';
+                if ($j < $sum_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
             }
-	}
-	else if ($attributes[$i] == 'AVG')
-	{
-	    $avg_count = count($avg_over);
+        }
+        else if ($attributes[$i] == 'AVG')
+        {
+            $avg_count = count($avg_over);
             for ($k=0; $k < $avg_count; $k++)
-	    {
-	    	$query = $query . '(';
-	    	$query = $query . $avg_over[$k];
-	    	$query = $query . ')';
-	    	if ($k < $avg_count - 1)
-	    	{
-		    $query = $query . ', ' . $agg_fun;
-	    	}
-	    }
-	}
+            {
+                $query = $query . '(';
+                $query = $query . $avg_over[$k];
+                $query = $query . ')';
+                if ($k < $avg_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+        }
+        else if ($attributes[$i] == 'MIN')
+        {
+            $min_count = count($min_over);
+            for ($k=0; $k < $min_count; $k++)
+            {
+                $query = $query . '(';
+                $query = $query . $min_over[$k];
+                $query = $query . ')';
+                if ($k < $min_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+        }
+        else if ($attributes[$i] == 'MAX')
+        {
+            $max_count = count($max_over);
+            for ($k=0; $k < $max_count; $k++)
+            {
+                $query = $query . '(';
+                $query = $query . $max_over[$k];
+                $query = $query . ')';
+                if ($k < $max_count - 1)
+                {
+                    $query = $query . ', ' . $agg_fun;
+                }
+            }
+        }
     }
 
     if ($i < $att_count - 1)
@@ -57,12 +85,14 @@ if (!empty($_POST['num_rows']))
 {
     $query = $query . ' WHERE ROWNUM<=' . (string) $_POST['num_rows'];
 }
-if (isset($sum_over) || isset($avg_over))
+if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over))
 {
 	$first = 0;
 	for ($k = 0; $k < $att_count; $k++) {
 		if (!in_array($attributes[$k], $sum_over)
 		 && !in_array($attributes[$k], $avg_over)
+         && !in_array($attributes[$k], $min_over)
+         && !in_array($attributes[$k], $max_over)
 		 && !in_array($attributes[$k], $agg_funs))
 		{
 			if ($first != 0) {
@@ -90,6 +120,8 @@ echo "<table class='sortable'>\n";
 echo "<tr>\n";
 $sumC = 0;
 $avgC = 0;
+$minC = 0;
+$maxC = 0;
 for ($i=0; $i < $att_count; $i++)
 {
 	echo "<th>";
@@ -110,32 +142,60 @@ for ($i=0; $i < $att_count; $i++)
 		echo $attributes[$i];
         if ($attributes[$i] == 'SUM')
         {
-	    $att = $sum_over[$sumC];
-	    if ($att === 'dem')
-	    {
-	    	$att = 'Elevation';
- 	    }
+            $att = $sum_over[$sumC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+                echo " " . $att;
+                $sumC = $sumC + 1;
+                if ($sumC < $sum_count)
+                {
+                    $i = $i - 1;
+                }
+        }
+        else if ($attributes[$i] == 'AVG')
+        {
+            $att = $avg_over[$avgC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
             echo " " . $att;
-            $sumC = $sumC + 1;
-            if ($sumC < $sum_count)
+            $avgC = $avgC + 1;
+            if ($avgC < $avg_count)
             {
                 $i = $i - 1;
             }
         }
-	else if ($attributes[$i] == 'AVG')
-	{
-	    $att = $avg_over[$avgC];
-	    if ($att === 'dem')
-	    {
-		$att = 'Elevation';
-	    }
-	    echo " " . $att;
-	    $avgC = $avgC + 1;
-	    if ($avgC < $avg_count)
-	    {
-		$i = $i - 1;
-	    }
-	}
+        else if ($attributes[$i] == 'MIN')
+        {
+            $att = $min_over[$minC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+            echo " " . $att;
+            $minC = $minC + 1;
+            if ($minC < $min_count)
+            {
+                $i = $i - 1;
+            }
+        }
+        else if ($attributes[$i] == 'MAX')
+        {
+            $att = $max_over[$maxC];
+            if ($att === 'dem')
+            {
+                $att = 'Elevation';
+            }
+            echo " " . $att;
+            $maxC = $maxC + 1;
+            if ($maxC < $max_count)
+            {
+                $i = $i - 1;
+            }
+        }
 	}
 	echo "</th>\n";
 }
