@@ -94,9 +94,21 @@
                     var spanName = inputs[i].id + "Where";
                     if (inputs[i].checked)
                     {
-                        textBoxHTML = "<input type='text' name='wheres[]' value='sweg' />";
+                        if (i == 0 || i == 1 || i == 6) 
+                        {
+                            var name = inputs[i].id;
+                            textBoxHTML = "<input type='text' name='wheres[" + name + "]' />";
+                        }
+                        else
+                        {
+                        
+                            var name = inputs[i].id;
+                            textBoxHTML = "<input type='number' min='0' name='wheres[" + name + "]' /> to " +
+                                          "<input type='number' min='0' name='wheres[" + name + "2]' />";
+                        }
                     }
-                    document.getElementById(spanName).innerHTML = textBoxHTML;
+                    if (document.getElementById(spanName).innerHTML == "" || textBoxHTML == "")
+                        document.getElementById(spanName).innerHTML = textBoxHTML;
                 }
             }
             for (i = 0; i < inputs.length; i++)
@@ -130,13 +142,16 @@
                 <span id="PopulationWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="dem" id="Elevation" />
                 <label for="Elevation">Elevation</label>
-                <span id="ElevationeWhere"></span><br />
+                <span id="ElevationWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Latitude" id="Latitude" />
-                <label for="Latitude">Latitude</label><br />
+                <label for="Latitude">Latitude</label>
+                <span id="LatitudeWhere"></span><br />
 				<input type="checkbox" name="attributes[]" value="Longitude" id="Longitude" />
-                <label for="Longitude">Longitude</label><br />
+                <label for="Longitude">Longitude</label>
+                <span id="LongitudeWhere"></span><br />
                 <input type="checkbox" name="attributes[]" value="time_zone" id="time_zone" />
-                <label for="time_zone">Time Zone</label><br />
+                <label for="time_zone">Time Zone</label>
+                <span id="time_zoneWhere"></span><br />
                 <input type="checkbox" name="attributes[]" value="SUM" id="sum" />
                 <label for="sum">Sum</label>
                 <span id="sum_result"></span><br />

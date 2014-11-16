@@ -34,9 +34,64 @@ for ($i=0; $i < $N; $i++)
 }
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC)';
+$firstWhere = true;
 if (!empty($_POST['num_rows']))
 {
     $query = $query . ' WHERE ROWNUM<=' . (string) $_POST['num_rows'];
+    $firstWhere = false;
+}
+if (!empty($_POST['wheres']))
+{
+    $wheres = $_POST['wheres'];
+    $wheres_count = count($wheres);
+    $valid_entries = 0;
+    $possible_attributes = array('asciiname', 'Country', 'Population', 'Elevation', 'Latitude', 'Longitude');
+    $attributes_count = count($possible_attributes);
+    for ($i = 0; $i < $attributes_count; $i++)
+    {
+        if (!empty($wheres[$possible_attributes[$i]]))
+        {
+            $valid_entries++;
+        }
+    }
+    if ($firstWhere)
+    {
+        $query = $query . ' WHERE ';
+        $firstWhere = false;
+    }
+    else
+    {
+        $query = $query . ' AND ';
+    }
+    $hits = 0;
+    for ($i = 0; $i < $attributes_count; $i++)
+    {
+        if (!empty($wheres[$possible_attributes[$i]]))
+        {
+            $selected_attribute = $possible_attributes[$i];
+            $selected_where = $wheres[$selected_attribute];
+            if ($selected_attribute === "asciiname" || $selected_attribute === "Country")
+            {
+                $query = $query . $selected_attribute . "=" . "'" . $selected_where . "'";
+                $hits++;
+                if ($hits < $valid_entries)
+                {
+                    $query = $query . " AND ";
+                }
+            }
+            else
+            {
+                $selected_attribute2 = $selected_attribute . '2';
+                $selected_where2 = $wheres[$selected_attribute2];
+                $query = $query . $selected_attribute . " BETWEEN " . (string)$selected_where . " AND " . (string)$selected_where2;
+                $hits++;
+                if ($hits < $valid_entries)
+                {
+                    $query = $query . " AND ";
+                }
+            }
+        }
+    }
 }
 if (isset($sum_over))
 {
