@@ -28,7 +28,7 @@
             },
             messages: {
                 'attributes[]': {required: "Please select at least one attribute."},
-                'sum_over[]': {required: "Please select at least one attribute to sum over. <br />"}
+                'sum_over[]': {required: "Please select at least one attribute to perform function over. <br />"}
             },
             errorPlacement: function(error, element) {
                 if (element.attr( "name" ) === "attributes[]") 
@@ -54,10 +54,12 @@
                           document.querySelector('input[id=Longitude]'),
                           document.querySelector('input[id=time_zone]'),
                           document.querySelector('input[id=sum]'),
-                          document.querySelector('input[id=avg]')];
+                          document.querySelector('input[id=avg]'),
+                          document.querySelector('input[id=min]'),
+                          document.querySelector('input[id=max]')];
             function check() 
             {
-                var a = "";
+                var a = ""; //sum
                 if (inputs[7].checked) 
                 {
                     for (i = 2; i < 4; ++i)
@@ -72,7 +74,8 @@
                     }
                 }
                 document.getElementById('sum_result').innerHTML = a;
-                var b = "";
+                
+                var b = ""; //avg
                 if (inputs[8].checked)
                 {
                     for (i = 2; i < 4; ++i)
@@ -87,6 +90,38 @@
                     }
                 }
                 document.getElementById('avg_result').innerHTML = b;
+                
+                var c = ""; //min
+                if (inputs[9].checked)
+                {
+                    for (i = 2; i < 4; ++i)
+                    {
+                        if (!inputs[i].checked)
+                        {
+                            var val = inputs[i].value;
+                            b = b + "<input type='checkbox' name='min_over[]' value='" +
+                            val + "'id='min" + val + "' />" +
+                            "<label for='min" + val + "' >" + inputs[i].id + "</label>";
+                        }
+                    }
+                }
+                document.getElementById('min_result').innerHTML = c;
+                
+                var d = ""; //max
+                if (inputs[10].checked)
+                {
+                    for (i = 2; i < 4; ++i)
+                    {
+                        if (!inputs[i].checked)
+                        {
+                            var val = inputs[i].value;
+                            b = b + "<input type='checkbox' name='max_over[]' value='" +
+                            val + "'id='max" + val + "' />" +
+                            "<label for='max" + val + "' >" + inputs[i].id + "</label>";
+                        }
+                    }
+                }
+                document.getElementById('max_result').innerHTML = d;
 
                 for (i = 0; i < 7; ++i)
                 {
@@ -143,6 +178,12 @@
                 <input type="checkbox" name="attributes[]" value="AVG" id="avg" />
                 <label for="avg">Average</label>
                 <span id="avg_result"></span><br />
+                <input type="checkbox" name="attributes[]" value="MIN" id="min" />
+                <label for="min">Minimum</label>
+                <span id="min_result"></span><br />
+                <input type="checkbox" name="attributes[]" value="MAX" id="max" />
+                <label for="max">Maximum</label>
+                <span id="max_result"></span><br />
                 Enter the maximum number of results you would like returned (leave blank for returning all):  <br />
                 <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" /><br />
 				<input type="submit" />
