@@ -325,6 +325,7 @@ echo "</table>\n";
 
 //table of data about current table
 if ($totalpop > 0) {
+    echo "<p>Information about this table:</p>";
     echo "<table class='sortable'>\n";
     echo "<tr>\n";
     echo "<td><b>Total Population: " . $totalpop . "</b></td>";
