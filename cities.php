@@ -34,19 +34,18 @@ for ($i=0; $i < $att_count; $i++)
         }
         else if ($attributes[$i] == 'AVG')
         {
-            $query = $query . "floor(" . $attributes[$i];
             $avg_count = count($avg_over);
             for ($k=0; $k < $avg_count; $k++)
             {
+                $query = $query . "floor(" . $attributes[$i];
                 $query = $query . '(';
                 $query = $query . $avg_over[$k];
-                $query = $query . ')';
+                $query = $query . '))';
                 if ($k < $avg_count - 1)
                 {
-                    $query = $query . ', ' . $agg_fun;
+                    $query = $query . ', ';
                 }
             }
-            $query = $query . ")";
         }
         else if ($attributes[$i] == 'MIN')
         {
@@ -138,6 +137,8 @@ if (!empty($_POST['wheres']))
             {
                 $selected_attribute2 = $selected_attribute . '2';
                 $selected_where2 = $wheres[$selected_attribute2];
+                if ($selected_where2 === "")
+                    $selected_where2 = "1125140637";
                 if ($selected_attribute == "Elevation")
                 {
                    $selected_attribute = "dem"; 
@@ -173,6 +174,52 @@ if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over)
 		}
 	}
 }
+if (!empty($_POST['havings']))
+{
+    $firstHaving = true;
+    $havings = $_POST['havings'];
+    $havings_count = count($havings);
+    $valid_entries = 0;
+    $possible_attributes = array('sum(Population)', 'sum(dem)', 'floor(avg(Population))', 
+                                 'floor(avg(dem))', 'min(Population)', 'min(dem)', 'max(Population)', 'max(dem)');
+    $attributes_count = count($possible_attributes);
+    for ($i = 0; $i < $attributes_count; $i++)
+    {
+        if (isset($havings[$possible_attributes[$i]]) && $havings[$possible_attributes[$i]] !== "")
+        {
+            $valid_entries++;
+        }
+    }
+    if ($firstHaving && $valid_entries > 0)
+    {
+        $query = $query . ' HAVING ';
+        $firstHaving = false;
+    }
+    else if ($valid_entries > 0)
+    {
+        $query = $query . ' AND ';
+    }
+    $hits = 0;
+    for ($i = 0; $i < $attributes_count; $i++)
+    {
+        if (isset($havings[$possible_attributes[$i]]) && $havings[$possible_attributes[$i]] !== "")
+        {
+            $selected_attribute = $possible_attributes[$i];
+            $selected_having = $havings[$selected_attribute];
+            $selected_attribute2 = $selected_attribute . '2';
+            $selected_having2 = $havings[$selected_attribute2];
+            if ($selected_having2 === "")
+                $selected_having2 = "1125140637";
+            $query = $query . $selected_attribute . " BETWEEN " . strval($selected_having) . " AND " . strval($selected_having2);
+            $hits++;
+            if ($hits < $valid_entries)
+            {
+                $query = $query . " AND ";
+            }
+        }
+    }
+}
+
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 

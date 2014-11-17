@@ -26,24 +26,26 @@
                     required: true,
                     aggAllowed: true
                     },
-                'sum_over[]': {required: true}
+                'sum_over[]': {required: true},
+                'avg_over[]': {required: true},
+                'min_over[]': {required: true},
+                'max_over[]': {required: true}
             },
             messages: {
                 'attributes[]': {required: "Please select at least one attribute."},
-                'sum_over[]': {required: "Please select at least one attribute to perform function over. <br />"}
+                'sum_over[]': {required: "Please select at least one attribute to perform a sum over. <br />"},
+                'avg_over[]': {required: "Please select at least one attribute to perform an average over. <br />"},
+                'min_over[]': {required: "Please select at least one attribute to perform a min over. <br />"},
+                'max_over[]': {required: "Please select at least one attribute to perform a max over. <br />"}
             },
             errorPlacement: function(error, element) {
                 if (element.attr( "name" ) === "attributes[]") 
                 {
                     $(element).next().after(error);
                 } 
-                else if (element.attr( "name" ) === "sum_over[]")
-                {
-                    error.insertBefore( '#sum' );
-                }
                 else
                 {
-                    error.insertAfter( element );
+                    error.insertBefore( '#sum' );
                 }
             }
         });
@@ -67,9 +69,15 @@
                     for (i = 2; i < 4; ++i)
                     {
                         var val = inputs[i].value;
-                        a = a + "<input type='checkbox' name='sum_over[]' value='" +
+                        a = a + "<br /><input type='checkbox' name='sum_over[]' style='margin-left:20px' value='" +
                             val + "'id='sum" + val + "' />" +
                             "<label for='sum" + val + "' >" + inputs[i].id + "</label>";
+                        if (val === "Population" )
+                            a = a + " <input type='number' name='havings[sum(Population)]' /> to " +
+                                "<input type='number' name='havings[sum(Population)2]' />";
+                        if (val === "dem")
+                            a = a + " <input type='number' name='havings[sum(dem)]' /> to " +
+                                "<input type='number' name='havings[sum(dem)2]' />";
                     }
                 }
                 if (document.getElementById('sum_result').innerHTML == "" || a == "")
@@ -81,10 +89,15 @@
                     for (i = 2; i < 4; ++i)
                     {
                         var val = inputs[i].value;
-                        b = b + "<input type='checkbox' name='avg_over[]' value='" +
-                        val + "'id='avg" + val + "' />" +
-                        "<label for='avg" + val + "' >" + inputs[i].id + "</label>";
-
+                        b = b + "<br /><input type='checkbox' name='avg_over[]' style='margin-left:20px' value='" +
+                            val + "'id='avg" + val + "' />" +
+                            "<label for='avg" + val + "' >" + inputs[i].id + "</label>";
+                        if (val === "Population" )
+                            b = b + " <input type='number' name='havings[floor(avg(Population))]' /> to " +
+                                "<input type='number' name='havings[floor(avg(Population))2]' />";
+                        if (val === "dem")
+                            b = b + " <input type='number' name='havings[floor(avg(dem))]' /> to " +
+                                "<input type='number' name='havings[floor(avg(dem))2]' />";
                     }
                 }
                 if (document.getElementById('avg_result').innerHTML == "" || b == "")
@@ -96,9 +109,15 @@
                     for (i = 2; i < 4; ++i)
                     {
                         var val = inputs[i].value;
-                        c = c + "<input type='checkbox' name='min_over[]' value='" +
-                        val + "'id='min" + val + "' />" +
-                        "<label for='min" + val + "' >" + inputs[i].id + "</label>";
+                        c = c + "<br /><input type='checkbox' name='min_over[]' style='margin-left:20px' value='" +
+                            val + "'id='min" + val + "' />" +
+                            "<label for='min" + val + "' >" + inputs[i].id + "</label>";
+                        if (val === "Population" )
+                            c = c + " <input type='number' name='havings[min(Population)]' /> to " +
+                                "<input type='number' name='havings[min(Population)2]' />";
+                        if (val === "dem")
+                            c = c + " <input type='number' name='havings[min(dem)]' /> to " +
+                                "<input type='number' name='havings[min(dem)2]' />";
                     }
                 }
                 if (document.getElementById('min_result').innerHTML == "" || c == "")
@@ -110,9 +129,15 @@
                     for (i = 2; i < 4; ++i)
                     {
                         var val = inputs[i].value;
-                        d = d + "<input type='checkbox' name='max_over[]' value='" +
-                        val + "'id='max" + val + "' />" +
-                        "<label for='max" + val + "' >" + inputs[i].id + "</label>";
+                        d = d + "<br /><input type='checkbox' name='max_over[]' style='margin-left:20px' value='" +
+                            val + "'id='max" + val + "' />" +
+                            "<label for='max" + val + "' >" + inputs[i].id + "</label>";
+                        if (val === "Population" )
+                            d = d + " <input type='number' name='havings[max(Population)]' /> to " +
+                                "<input type='number' name='havings[max(Population)2]' />";
+                        if (val === "dem")
+                            d = d + " <input type='number' name='havings[max(dem)]' /> to " +
+                                "<input type='number' name='havings[max(dem)2]' />";
                     }
                 }
                 if (document.getElementById('max_result').innerHTML == "" || d == "")
