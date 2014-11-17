@@ -57,6 +57,7 @@ if($User_username && $User_password ){
 else{
 	die('False input Or No input');
 }
+
  //
 // VERY important to close Oracle Database Connections and free statements!
 //
