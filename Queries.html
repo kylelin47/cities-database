@@ -208,12 +208,24 @@
             </div>
             <br style="clear: left;" />
             </div>
-            Enter the maximum number of results you would like returned (leave blank for returning all):  <br />
+            <div style="margin-left:15px;">Enter the maximum number of results you would like returned (leave blank for returning all):<br />
             <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" /><br />
             <input type='hidden' value='0' name='group' id='hidden' />
-            <input type="submit" />
+            <input type="submit" /></div>
 			</form>
+            <hr style="width:95%;" />
+            <h1 style="margin-left:15px;">Increment</h1>
+            <form id="increment" action="increment.php" method="post" target="_blank" style="margin-left:15px;">
+                <select name="increment_over">
+                    <option value="Latitude">Latitude</option>
+                    <option value="Longitude">Longitude</option>
+                    <option value="Elevation">Elevation</option>
+                </select>
+                from <input type='number' name='minimum' required /> to  <input type='number' name='maximum' required /><br />
+                <label>Increment By&nbsp<input type='number' name='increment' min='1' required /></label><br />
+                <label><input type="checkbox" name="attributes[]" value="sum(Population)" />Sum of Population</label><br />
+                <input type="submit" />
+            </form>
 		</div>
-		<p> insert box here</p>
 	</body>
 </html>
