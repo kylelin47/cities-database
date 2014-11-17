@@ -7,7 +7,7 @@ $connection = oci_connect($username,
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
 $att_count = count($attributes);
-$agg_funs = array('SUM', 'AVG', 'MIN', 'MAX');
+$agg_funs = array('SUM', 'AVG', 'MIN', 'MAX', 'COUNT');
 for ($i=0; $i < $att_count; $i++)
 {
     $agg_fun = $attributes[$i];
@@ -77,6 +77,11 @@ for ($i=0; $i < $att_count; $i++)
                 }
             }
         }
+        else if ($attributes[$i] == 'COUNT')
+        {
+            $query = $query . 'COUNT(asciiname)';
+            $count_set = true;
+        }
     }
     else {
         $query = $query . $attributes[$i];
@@ -89,17 +94,12 @@ for ($i=0; $i < $att_count; $i++)
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC)';
 $firstWhere = true;
-if (!empty($_POST['num_rows']))
-{
-    $query = $query . ' WHERE ROWNUM<=' . (string) $_POST['num_rows'];
-    $firstWhere = false;
-}
 if (!empty($_POST['wheres']))
 {
     $wheres = $_POST['wheres'];
     $wheres_count = count($wheres);
     $valid_entries = 0;
-    $possible_attributes = array('asciiname', 'Country', 'Population', 'Elevation', 'Latitude', 'Longitude');
+    $possible_attributes = array('asciiname', 'Country', 'Population', 'dem', 'Latitude', 'Longitude');
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
     {
@@ -139,10 +139,6 @@ if (!empty($_POST['wheres']))
                 $selected_where2 = $wheres[$selected_attribute2];
                 if ($selected_where2 === "")
                     $selected_where2 = "1125140637";
-                if ($selected_attribute == "Elevation")
-                {
-                   $selected_attribute = "dem"; 
-                }
                 $query = $query . $selected_attribute . " BETWEEN " . strval($selected_where) . " AND " . strval($selected_where2);
                 $hits++;
                 if ($hits < $valid_entries)
@@ -153,15 +149,11 @@ if (!empty($_POST['wheres']))
         }
     }
 }
-if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over))
+if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over) || isset($count_set) || !empty($_POST['group']))
 {
 	$first = 0;
 	for ($k = 0; $k < $att_count; $k++) {
-		if (!in_array($attributes[$k], $sum_over)
-		 && !in_array($attributes[$k], $avg_over)
-         && !in_array($attributes[$k], $min_over)
-         && !in_array($attributes[$k], $max_over)
-		 && !in_array($attributes[$k], $agg_funs))
+		if (!in_array($attributes[$k], $agg_funs))
 		{
 			if ($first != 0) {
 			$query = $query . ", "; }
@@ -180,7 +172,7 @@ if (!empty($_POST['havings']))
     $havings = $_POST['havings'];
     $havings_count = count($havings);
     $valid_entries = 0;
-    $possible_attributes = array('sum(Population)', 'sum(dem)', 'floor(avg(Population))', 
+    $possible_attributes = array('sum(Population)', 'sum(dem)', 'floor(avg(Population))', 'count(asciiname)',
                                  'floor(avg(dem))', 'min(Population)', 'min(dem)', 'max(Population)', 'max(dem)');
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
@@ -209,7 +201,7 @@ if (!empty($_POST['havings']))
             $selected_attribute2 = $selected_attribute . '2';
             $selected_having2 = $havings[$selected_attribute2];
             if ($selected_having2 === "")
-                $selected_having2 = "1125140637";
+                $selected_having2 = "99999999999";
             $query = $query . $selected_attribute . " BETWEEN " . strval($selected_having) . " AND " . strval($selected_having2);
             $hits++;
             if ($hits < $valid_entries)
@@ -219,7 +211,11 @@ if (!empty($_POST['havings']))
         }
     }
 }
-
+//$query = $query . " ORDER BY population DESC";
+if (!empty($_POST['num_rows']))
+{
+    $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . (string) $_POST['num_rows'];
+}
 $statement = oci_parse($connection, $query);
 oci_execute($statement);
 
