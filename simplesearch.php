@@ -25,11 +25,38 @@ echo "      <th>Elevation</th>\n";
 echo "      <th>Latitude</th>\n";
 echo "      <th>Longitude</th>\n";
 echo "</tr>\n";
+
+//variables to keep metadata about resulting table
+$totalpop = 0;
+$minpop = 99999999999;
+$maxpop = 0;
+$totalele = 0;
+$minele = 99999999999;
+$maxele = -9999999999;
+$haspop = true;
+$hasele = true;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
+    
+    $totalpop = $totalpop + $row['POPULATION'];
+    if ($row['POPULATION'] > $maxpop) {
+        $maxpop = $row['POPULATION'];
+    }
+    if ($row['POPULATION'] < $minpop) {
+        $minpop = $row['POPULATION'];
+    }
+    
+    $totalele = $totalele + $row['DEM'];
+    if ($row['DEM'] > $maxele) {
+        $maxele = $row['DEM'];
+    }
+    if ($row['DEM'] < $minele) {
+        $minele = $row['DEM'];
+    }
+    
     $latitude = $row['LATITUDE'];
     $longitude = $row['LONGITUDE'];
     if ($latitude < 0)
@@ -62,6 +89,34 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "</tr>\n";
 }
 echo "</table>\n";
+
+//table of data about current table
+if ($hasele || $haspop) {
+    echo "<p>Information about this table:</p>";
+    echo "<table class='sortable'>\n";
+    if ($haspop) {
+        echo "<tr>\n";
+        echo "<td><b>Total Population: " . $totalpop . "</b></td>";
+        echo "<td><b>Average Population: " . ($totalpop/$_POST['num_rows']) . "</b></td>";
+        echo "</tr>";
+        echo "<tr>\n";
+        echo "<td><b>Min Population: " . $minpop . "</b></td>";
+        echo "<td><b>Max Population: " . $maxpop . "</b></td>";
+        echo "</tr>";
+    }
+    if ($hasele) {
+        echo "<tr>\n";
+        echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
+        echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
+        echo "</tr>";
+        echo "<tr>\n";
+        echo "<td><b>Min Elevation: " . $minele . "</b></td>";
+        echo "<td><b>Max Elevation: " . $maxele . "</b></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+}
+
 echo $query;
 echo "</body>";
 echo "</html>";
