@@ -268,6 +268,8 @@ for ($i=0; $i < $att_count; $i++)
 }
 echo "</tr>\n";
 $totalpop = 0;
+$minpop = 99999999999;
+$maxpop = 0;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
@@ -276,7 +278,13 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
     if (isset($row['POPULATION']))
     {
-	$totalpop = $totalpop + $row['POPULATION'];
+        $totalpop = $totalpop + $row['POPULATION'];
+        if ($row['POPULATION'] > $maxpop) {
+            $maxpop = $row['POPULATION'];
+        }
+        if ($row['POPULATION'] < $minpop) {
+            $minpop = $row['POPULATION'];
+        }
     }
 
     if (isset($row['LATITUDE']) && isset($row['LONGITUDE']))
@@ -313,10 +321,21 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     }
     echo "</tr>\n";
 }
-if ($totalpop > 0) {
-    echo "<tfoot><tr><td><b>Total Population: " . $totalpop . "</b></td></tr></tfoot>";
-}
 echo "</table>\n";
+
+//table of data about current table
+if ($totalpop > 0) {
+    echo "<table class='sortable'>\n";
+    echo "<tr>\n";
+    echo "<td><b>Total Population: " . $totalpop . "</b></td>";
+    echo "<td><b>Average Population: " . ($totalpop/$_POST['num_rows']) . "</b></td>";
+    echo "</tr>";
+    echo "<tr>\n";
+    echo "<td><b>Min Population: " . $minpop . "</b></td>";
+    echo "<td><b>Max Population: " . $maxpop . "</b></td>";
+    echo "</tr>";
+    echo "</table>";
+}
 echo $query;
 echo "</body>";
 echo "</html>";
