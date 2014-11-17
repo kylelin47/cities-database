@@ -25,11 +25,24 @@ echo "      <th>Elevation</th>\n";
 echo "      <th>Latitude</th>\n";
 echo "      <th>Longitude</th>\n";
 echo "</tr>\n";
+
+$totalpop = 0;
+$minpop = 99999999999;
+$maxpop = 0;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
+    
+    $totalpop = $totalpop + $row['POPULATION'];
+    if ($row['POPULATION'] > $maxpop) {
+        $maxpop = $row['POPULATION'];
+    }
+    if ($row['POPULATION'] < $minpop) {
+        $minpop = $row['POPULATION'];
+    }
+    
     $latitude = $row['LATITUDE'];
     $longitude = $row['LONGITUDE'];
     if ($latitude < 0)

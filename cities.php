@@ -267,9 +267,14 @@ for ($i=0; $i < $att_count; $i++)
 	echo "</th>\n";
 }
 echo "</tr>\n";
+
+//variables to keep metadata about resulting table
 $totalpop = 0;
 $minpop = 99999999999;
 $maxpop = 0;
+$totalele = 0;
+$minele = 99999999999;
+$maxele = -9999999999;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
@@ -284,6 +289,17 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
         }
         if ($row['POPULATION'] < $minpop) {
             $minpop = $row['POPULATION'];
+        }
+    }
+    
+    if (isset($row['DEM']))
+    {
+        $totalele = $totalele + $row['DEM'];
+        if ($row['DEM'] > $maxele) {
+            $maxele = $row['DEM'];
+        }
+        if ($row['DEM'] < $minele) {
+            $minele = $row['DEM'];
         }
     }
 
@@ -324,7 +340,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
 echo "</table>\n";
 
 //table of data about current table
-if ($totalpop > 0) {
+if ($totalpop > 0 && $totalele > 0) {
     echo "<p>Information about this table:</p>";
     echo "<table class='sortable'>\n";
     echo "<tr>\n";
@@ -334,6 +350,14 @@ if ($totalpop > 0) {
     echo "<tr>\n";
     echo "<td><b>Min Population: " . $minpop . "</b></td>";
     echo "<td><b>Max Population: " . $maxpop . "</b></td>";
+    echo "</tr>";
+    echo "<tr>\n";
+    echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
+    echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
+    echo "</tr>";
+    echo "<tr>\n";
+    echo "<td><b>Min Elevation: " . $minele . "</b></td>";
+    echo "<td><b>Max Elevation: " . $maxele . "</b></td>";
     echo "</tr>";
     echo "</table>";
 }
