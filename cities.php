@@ -275,6 +275,8 @@ $maxpop = 0;
 $totalele = 0;
 $minele = 99999999999;
 $maxele = -9999999999;
+$haspop = false;
+$hasele = false;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
@@ -283,6 +285,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
 
     if (isset($row['POPULATION']))
     {
+        $haspop = true;
         $totalpop = $totalpop + $row['POPULATION'];
         if ($row['POPULATION'] > $maxpop) {
             $maxpop = $row['POPULATION'];
@@ -294,6 +297,7 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     
     if (isset($row['DEM']))
     {
+        $hasele = true;
         $totalele = $totalele + $row['DEM'];
         if ($row['DEM'] > $maxele) {
             $maxele = $row['DEM'];
@@ -340,25 +344,29 @@ while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
 echo "</table>\n";
 
 //table of data about current table
-if ($totalpop > 0 && $totalele > 0) {
+if ($hasele || $haspop) {
     echo "<p>Information about this table:</p>";
     echo "<table class='sortable'>\n";
-    echo "<tr>\n";
-    echo "<td><b>Total Population: " . $totalpop . "</b></td>";
-    echo "<td><b>Average Population: " . ($totalpop/$_POST['num_rows']) . "</b></td>";
-    echo "</tr>";
-    echo "<tr>\n";
-    echo "<td><b>Min Population: " . $minpop . "</b></td>";
-    echo "<td><b>Max Population: " . $maxpop . "</b></td>";
-    echo "</tr>";
-    echo "<tr>\n";
-    echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
-    echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
-    echo "</tr>";
-    echo "<tr>\n";
-    echo "<td><b>Min Elevation: " . $minele . "</b></td>";
-    echo "<td><b>Max Elevation: " . $maxele . "</b></td>";
-    echo "</tr>";
+    if ($haspop) {
+        echo "<tr>\n";
+        echo "<td><b>Total Population: " . $totalpop . "</b></td>";
+        echo "<td><b>Average Population: " . ($totalpop/$_POST['num_rows']) . "</b></td>";
+        echo "</tr>";
+        echo "<tr>\n";
+        echo "<td><b>Min Population: " . $minpop . "</b></td>";
+        echo "<td><b>Max Population: " . $maxpop . "</b></td>";
+        echo "</tr>";
+    }
+    if ($hasele) {
+        echo "<tr>\n";
+        echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
+        echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
+        echo "</tr>";
+        echo "<tr>\n";
+        echo "<td><b>Min Elevation: " . $minele . "</b></td>";
+        echo "<td><b>Max Elevation: " . $maxele . "</b></td>";
+        echo "</tr>";
+    }
     echo "</table>";
 }
 echo $query;
