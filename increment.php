@@ -35,12 +35,12 @@ for ($i = $minimum; $i < $maximum; $i = $i + $increment)
     for ($j = 0; $j < $att_count; $j++)
     {
         $query = $query . $attributes[$j];
-        if ($i < $att_count - 1)
+        if ($j < $att_count - 1)
         {
             $query = $query . ',';
         }
     }
-    $query = $query . "FROM cities WHERE " . $increment_over . " BETWEEN " . strval($i) . " AND " . strval($i + $increment);
+    $query = $query . " FROM cities WHERE " . $increment_over . " BETWEEN " . strval($i) . " AND " . strval($i + $increment);
     $statement = oci_parse($connection, $query);
     oci_execute($statement);
     while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
