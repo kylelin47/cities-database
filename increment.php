@@ -7,7 +7,7 @@ $connection = oci_connect($username,
 $minimum = $_POST['minimum'];
 $maximum = $_POST['maximum'];
 $increment = $_POST['increment'];
-$increment_over = $_POST['increment_over'];
+$increment_over = str_replace("'","''",$_POST['increment_over']);
 $attributes = $_POST['attributes'];
 $att_count = count($attributes);
 echo "<html>";
@@ -24,8 +24,22 @@ for ($i=0; $i < $att_count; $i++)
     echo "<th>";
     if ($attributes[$i] == 'count(asciiname)')
         echo "Number of Cities";
-    else
-        echo $attributes[$i];
+    else if ($attributes[$i] == 'sum(Population)')
+        echo "Sum of Population";
+    else if ($attributes[$i] == 'sum(dem)')
+        echo "Sum of Elevation";
+    else if ($attributes[$i] == 'floor(avg(Population))')
+        echo "Average Population";
+    else if ($attributes[$i] == 'floor(avg(dem))')
+        echo "Average Elevation";
+    else if ($attributes[$i] == 'min(Population)')
+        echo "Minimum Population";
+    else if ($attributes[$i] == 'min(dem)')
+        echo "Minimum Elevation";
+    else if ($attributes[$i] == 'max(Population)')
+        echo "Maximum Population";
+    else if ($attributes[$i] == 'max(dem)')
+        echo "Maximum Elevation";
     echo "</th>";
 }
 echo "<th>";

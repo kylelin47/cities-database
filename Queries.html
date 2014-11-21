@@ -105,6 +105,14 @@
                     c = c + "<br /><input type='checkbox' name='min_over[]' style='margin-left:20px' value='" +
                         val + "'id='min" + val + "' />" +
                         "<label for='min" + val + "' >" + "Elevation" + "</label>";
+                    val = "Latitude";
+                    c = c + "<br /><input type='checkbox' name='min_over[]' style='margin-left:20px' value='" +
+                        val + "'id='min" + val + "' />" +
+                        "<label for='min" + val + "' >" + "Latitude" + "</label>";
+                    val = "Longitude";
+                    c = c + "<br /><input type='checkbox' name='min_over[]' style='margin-left:20px' value='" +
+                        val + "'id='min" + val + "' />" +
+                        "<label for='min" + val + "' >" + "Longitude" + "</label>";
                 }
                 if (document.getElementById('min_result').innerHTML == "" || c == "")
                         document.getElementById('min_result').innerHTML = c;
@@ -120,6 +128,14 @@
                     d = d + "<br /><input type='checkbox' name='max_over[]' style='margin-left:20px' value='" +
                         val + "'id='max" + val + "' />" +
                         "<label for='max" + val + "' >" + "Elevation" + "</label>";
+                    val = "Latitude";
+                    d = d + "<br /><input type='checkbox' name='max_over[]' style='margin-left:20px' value='" +
+                        val + "'id='max" + val + "' />" +
+                        "<label for='max" + val + "' >" + "Latitude" + "</label>";
+                    val = "Longitude";
+                    d = d + "<br /><input type='checkbox' name='max_over[]' style='margin-left:20px' value='" +
+                        val + "'id='max" + val + "' />" +
+                        "<label for='max" + val + "' >" + "Longitude" + "</label>";
                 }
                 if (document.getElementById('max_result').innerHTML == "" || d == "")
                         document.getElementById('max_result').innerHTML = d;
@@ -187,7 +203,7 @@
                 <input type='number' name='wheres[Latitude2]' /><br />
                 <label for="longitudeWhere" class="where">Longitude</label><input type='number' name='wheres[Longitude]' id='longitudeWhere' /> to 
                 <input type='number' name='wheres[Longitude2]' /><br />
-                <label for="cn" class="where">Number of Cities</label><input type='number' name='havings[count(asciiname)]' id='cn' /> to  
+                <label for="cn" class="where"># of Cities</label><input type='number' name='havings[count(asciiname)]' id='cn' /> to  
                 <input type='number' name='havings[count(asciiname)2]' /><br />
                 <label for="sph" class="where">Sum Pop.</label><input type='number' name='havings[sum(Population)]' id='sph' onchange="toggle(this)" /> to  
                 <input type='number' name='havings[sum(Population)2]' /><br />
@@ -208,7 +224,7 @@
             </div>
             <br style="clear: left;" />
             </div>
-            <div style="margin-left:15px;">Enter the maximum number of results you would like returned (leave blank for returning all):<br />
+            <div style="margin-left:15px;"># of results to view:<br />
             <input type="number" size="6" name="num_rows" min="1" max="100000" value="500" /><br />
             <input type='hidden' value='0' name='group' id='hidden' />
             <input type="submit" /></div>
@@ -223,6 +239,7 @@
                 </select>
                 from <input type='number' name='minimum' required /> to  <input type='number' name='maximum' required /><br />
                 <label>Increment By&nbsp<input type='number' name='increment' min='1' required /></label><br />
+                <h1>Select</h1>
                 <label><input type="checkbox" name="attributes[]" value="count(asciiname)" />Number of Cities</label><br />
                 <label><input type="checkbox" name="attributes[]" value="sum(Population)" />Sum of Population</label><br />
                 <label><input type="checkbox" name="attributes[]" value="sum(dem)" />Sum of Elevation</label><br />
@@ -231,7 +248,7 @@
                 <label><input type="checkbox" name="attributes[]" value="max(Population)" />Maximum Population</label><br />
                 <label><input type="checkbox" name="attributes[]" value="max(dem)" />Maximum Elevation</label><br />
                 <label><input type="checkbox" name="attributes[]" value="min(Population)" />Minimum Population</label><br />
-                <label><input type="checkbox" name="attributes[]" value="min(dem)" />Minimum Elevation</label><br />
+                <label><input type="checkbox" name="attributes[]" value="min(dem)" />Minimum Elevation</label><br /><br />
                 <input type="submit" />
             </form>
 		</div>
