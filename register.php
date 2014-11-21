@@ -74,6 +74,7 @@ and open the template in the editor.
         oci_bind_by_name($sql_User, ":is_admin", $is_admin);
         if(oci_execute($sql_User) == TRUE){
                 oci_commit($connection);
+                echo $sql;
                 echo "New record created successfully";
                 echo "<br>";
                 echo '<a href = "index.html" >Click this Link back to homePage</a>';

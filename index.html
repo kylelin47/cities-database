@@ -4,7 +4,7 @@
 
 <head>
 	<title>Home</title>
-	<link rel = "stylesheet" href = "styles/page.css" type = "text/css" />
+	<link rel = "stylesheet" href = "styles/testpage.css" type = "text/css" />
 	<script type="text/javascript">
     $(document).ready(function() {
         $('.searchbox').keyup(function(event) {
@@ -19,8 +19,6 @@
 
 
 <body>
-	<h3 >HomePage</h3>
-	<h3 class = "author">Joachim Jones<br>Kyle Lin<br>Jinchi Liu<br>Qian Wang</h3>
     <form action="simplesearch.php" method="post" class="searchform" target="_blank">
         <input type="text" required name="cityName" pattern="[a-zA-Z0-9 ]+" class="searchbox"
          placeholder="Search for a city by name" autofocus />
@@ -29,25 +27,11 @@
 <div id= "footer">
 <!--footer-menu-->
 <ul id= "footer_menu">
- <li class= "homeButton"><a href="index.html"></a></li>
-	<li>Guide
-		<ul class="DropUp", class = "clear">
-			<li><a href = "Guide.html">About FAQ</a></li>
-			<li><a href = "Guide.html">About Queries </li>
-			<li><a href = "Guide.html">About User</li>
-		</ul>
-	</li>
 	
 	<li><a href = "FAQ.html">FAQ</a></li>
 
 	<li><a href = "Queries.html">Queries</a></li>
-</ul>
-
-<!--notification-->
-
-<ul id="notification">
-	<li>Time</li>
-	<li>Date</li>
+    <li><a href = "User.html">User</a></li>
 </ul>
 
 </div>
