@@ -22,7 +22,10 @@ echo "<tr>\n";
 for ($i=0; $i < $att_count; $i++)
 {
     echo "<th>";
-    echo $attributes[$i];
+    if ($attributes[$i] == 'count(asciiname)')
+        echo "Number of Cities";
+    else
+        echo $attributes[$i];
     echo "</th>";
 }
 echo "<th>";

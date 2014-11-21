@@ -151,6 +151,8 @@ if (!empty($_POST['wheres']))
 }
 if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over) || isset($count_set) || !empty($_POST['group']))
 {
+    $group_by = array();
+    $j = 0;
 	$first = 0;
 	for ($k = 0; $k < $att_count; $k++) {
 		if (!in_array($attributes[$k], $agg_funs))
@@ -162,6 +164,8 @@ if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over)
             	$query = $query . " GROUP BY ";
             }
 			$query = $query . $attributes[$k];
+            $group_by[$j] = $attributes[$k];
+            $j = $j + 1;
 			$first = 1;
 		}
 	}
@@ -212,7 +216,7 @@ if (!empty($_POST['havings']))
     }
 }
 //$query = $query . " ORDER BY population DESC";
-if (!empty($_POST['num_rows']))
+if (!empty($_POST['num_rows']) && is_int($_POST['num_rows']))
 {
     $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . (string) $_POST['num_rows'];
 }
