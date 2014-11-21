@@ -61,10 +61,19 @@ and open the template in the editor.
         else{
             $is_admin = 0;
         }
+        oci_free_statement($sql_User);
         $sql = "INSERT INTO login (USERNAME,PASSWORD,FNAME,LNAME,CITY,COUNTRY,is_admin) 
-               VALUES ('$Username','$Password','$FName','$LName','$CITY','$COUNTRY','$is_admin')";   
+               VALUES (:Username, :Password, :FName, :LName, :CITY, :COUNTRY, :is_admin)";   
         $sql_User =oci_parse($connection, $sql);
+        oci_bind_by_name($sql_User, ":Username", $Username);
+        oci_bind_by_name($sql_User, ":Password", $Password);
+        oci_bind_by_name($sql_User, ":FName", $FName);
+        oci_bind_by_name($sql_User, ":LName", $LName);
+        oci_bind_by_name($sql_User, ":CITY", $CITY);
+        oci_bind_by_name($sql_User, ":COUNTRY", $COUNTRY);
+        oci_bind_by_name($sql_User, ":is_admin", $is_admin);
         if(oci_execute($sql_User) == TRUE){
+                oci_commit($connection);
                 echo "New record created successfully";
                 echo "<br>";
                 echo '<a href = "index.html" >Click this Link back to homePage</a>';

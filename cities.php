@@ -1,5 +1,6 @@
 #!/usr/local/bin/php
 <?php
+session_start();
 include "database.php";
 $connection = oci_connect($username,
                           $password,
@@ -228,6 +229,13 @@ if (!empty($_POST['num_rows']) && is_int($_POST['num_rows']))
     $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . (string) $_POST['num_rows'];
 }
 $statement = oci_parse($connection, $query);
+/*$statement2 = oci_parse($connection, 'INSERT INTO history(username, query, date) VALUES(:username, :query, :date)');
+oci_bind_by_name($statement2, ":username", $_SESSION['NAME']);
+oci_bind_by_name($statement2, ":query", $query);
+oci_bind_by_name($statement2, ":date", sysdate);
+oci_execute($statement2);
+oci_commit($connection);
+oci_free_statement($statement2);*/
 oci_execute($statement);
 
 echo "<html>";
