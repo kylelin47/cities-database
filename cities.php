@@ -4,6 +4,13 @@ include "database.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
+function escapeSQL($string, $wildcard=false)
+{    
+    $result = str_replace("'","''",$string);
+    if ($wildcard == true) $result = str_replace("%","%%",$result);
+    return $result;
+}
+
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
 $att_count = count($attributes);
@@ -84,7 +91,7 @@ for ($i=0; $i < $att_count; $i++)
         }
     }
     else {
-        $query = $query . $attributes[$i];
+        $query = $query . escapeSQL($attributes[$i]);
     }
     if ($i < $att_count - 1)
     {
@@ -123,7 +130,7 @@ if (!empty($_POST['wheres']))
         if (isset($wheres[$possible_attributes[$i]]) && $wheres[$possible_attributes[$i]] !== "")
         {
             $selected_attribute = $possible_attributes[$i];
-            $selected_where = $wheres[$selected_attribute];
+            $selected_where = escapeSQL($wheres[$selected_attribute]);
             if ($selected_attribute === "asciiname" || $selected_attribute === "Country")
             {
                 $query = $query . $selected_attribute . "=" . "'" . $selected_where . "'";
@@ -136,7 +143,7 @@ if (!empty($_POST['wheres']))
             else
             {
                 $selected_attribute2 = $selected_attribute . '2';
-                $selected_where2 = $wheres[$selected_attribute2];
+                $selected_where2 = escapeSQL($wheres[$selected_attribute2]);
                 if ($selected_where2 === "")
                     $selected_where2 = "1125140637";
                 $query = $query . $selected_attribute . " BETWEEN " . strval($selected_where) . " AND " . strval($selected_where2);
@@ -163,8 +170,8 @@ if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over)
             {
             	$query = $query . " GROUP BY ";
             }
-			$query = $query . $attributes[$k];
-            $group_by[$j] = $attributes[$k];
+			$query = $query . escapeSQL($attributes[$k]);
+            $group_by[$j] = escapeSQL($attributes[$k]);
             $j = $j + 1;
 			$first = 1;
 		}
