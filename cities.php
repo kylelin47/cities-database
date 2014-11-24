@@ -11,6 +11,20 @@ function escapeSQL($string, $wildcard=false)
     if ($wildcard == true) $result = str_replace("%","%%",$result);
     return $result;
 }
+if (isset($_POST['english']))
+{
+    $find_query = oci_parse($connection, "SELECT DISTINCT query FROM history WHERE english=:english");
+    oci_bind_by_name($find_query, ":english", $_POST['english']);
+    oci_execute($find_query);
+    while ($row = oci_fetch_array($find_query, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        foreach ($row as $item) {
+            $query = $item;
+        }
+    }
+    oci_free_statement($find_query);
+}
+else
+{
 $english = 'Find ';
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
@@ -235,7 +249,6 @@ if (!empty($_POST['num_rows']) && is_numeric($_POST['num_rows']))
 {
     $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . $_POST['num_rows'];
 }
-$statement = oci_parse($connection, $query);
 $english = str_replace('dem', 'Elevation', $english);
 if (isset($_SESSION['NAME']))
 {
@@ -247,6 +260,8 @@ if (isset($_SESSION['NAME']))
     oci_commit($connection);
     oci_free_statement($statement2);
 }
+}
+$statement = oci_parse($connection, $query);
 oci_execute($statement);
 
 echo "<html>";

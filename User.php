@@ -23,7 +23,14 @@ if (isset($_SESSION['NAME']))
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
+        $english = $item;
     }
+    echo "<td>";
+    echo "<form action='cities.php' method='post' target='_blank'>";
+    echo "<input type='hidden' name='english' value='" . $english . "' />";
+    echo "<input type='submit' value='Search' />";
+    echo "</form>";
+    echo "</td>";
     echo "</tr>";
     }
     echo "<a href='index.html'>Back Home</a>";
