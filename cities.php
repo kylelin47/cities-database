@@ -277,85 +277,14 @@ $sumC = 0;
 $avgC = 0;
 $minC = 0;
 $maxC = 0;
-for ($i=0; $i < $att_count; $i++)
+$ncols = oci_num_fields($statement);
+for ($i=1; $i <= $ncols; $i++)
 {
 	echo "<th>";
-	if ($attributes[$i] == 'asciiname')
-	{
-		echo "Name";
-	}
-    else if ($attributes[$i] == 'time_zone')
-	{
-		echo "Time Zone";
-	}
-    else if ($attributes[$i] == 'dem')
-	{
-		echo "Elevation";
-	}
-    else if ($attributes[$i] == 'COUNT')
-	{
-		echo "# Cities";
-	}
-	else
-	{
-		echo $attributes[$i];
-        if ($attributes[$i] == 'SUM')
-        {
-            $att = $sum_over[$sumC];
-            if ($att === 'dem')
-            {
-                $att = 'Elevation';
-            }
-                echo " " . $att;
-                $sumC = $sumC + 1;
-                if ($sumC < $sum_count)
-                {
-                    $i = $i - 1;
-                }
-        }
-        else if ($attributes[$i] == 'AVG')
-        {
-            $att = $avg_over[$avgC];
-            if ($att === 'dem')
-            {
-                $att = 'Elevation';
-            }
-            echo " " . $att;
-            $avgC = $avgC + 1;
-            if ($avgC < $avg_count)
-            {
-                $i = $i - 1;
-            }
-        }
-        else if ($attributes[$i] == 'MIN')
-        {
-            $att = $min_over[$minC];
-            if ($att === 'dem')
-            {
-                $att = 'Elevation';
-            }
-            echo " " . $att;
-            $minC = $minC + 1;
-            if ($minC < $min_count)
-            {
-                $i = $i - 1;
-            }
-        }
-        else if ($attributes[$i] == 'MAX')
-        {
-            $att = $max_over[$maxC];
-            if ($att === 'dem')
-            {
-                $att = 'Elevation';
-            }
-            echo " " . $att;
-            $maxC = $maxC + 1;
-            if ($maxC < $max_count)
-            {
-                $i = $i - 1;
-            }
-        }
-	}
+    $th = oci_field_name($statement, $i);
+    $th = str_replace('DEM', 'ELEVATION', $th);
+    $th = str_replace('ASCIINAME', 'NAME', $th);
+    echo $th;
 	echo "</th>\n";
 }
 echo "</tr>\n";
