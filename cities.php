@@ -11,7 +11,7 @@ function escapeSQL($string, $wildcard=false)
     if ($wildcard == true) $result = str_replace("%","%%",$result);
     return $result;
 }
-
+$english = 'Find ';
 $query = 'SELECT ';
 $attributes = $_POST['attributes'];
 $att_count = count($attributes);
@@ -28,23 +28,28 @@ for ($i=0; $i < $att_count; $i++)
         if ($attributes[$i] == 'SUM')
         {
             $query = $query . $attributes[$i];
+            $english = $english . 'sum of ';
             $sum_count = count($sum_over);
             for ($j=0; $j < $sum_count; $j++)
             {
                 $query = $query . '(';
                 $query = $query . $sum_over[$j];
                 $query = $query . ')';
+                $english = $english . $sum_over[$j];
                 if ($j < $sum_count - 1)
                 {
                     $query = $query . ', ' . $agg_fun;
+                    $english = $english . ', ';
                 }
             }
         }
         else if ($attributes[$i] == 'AVG')
         {
             $avg_count = count($avg_over);
+            $english = $english . 'average of ';
             for ($k=0; $k < $avg_count; $k++)
             {
+                $english = $english . $avg_over[$k];
                 $query = $query . "floor(" . $attributes[$i];
                 $query = $query . '(';
                 $query = $query . $avg_over[$k];
@@ -52,6 +57,7 @@ for ($i=0; $i < $att_count; $i++)
                 if ($k < $avg_count - 1)
                 {
                     $query = $query . ', ';
+                    $english = $english . ', ';
                 }
             }
         }
@@ -223,19 +229,24 @@ if (!empty($_POST['havings']))
         }
     }
 }
+//if (!isset($group_by) || in_array($order_by, $group_by))
 //$query = $query . " ORDER BY population DESC";
-if (!empty($_POST['num_rows']) && is_int($_POST['num_rows']))
+if (!empty($_POST['num_rows']) && is_numeric($_POST['num_rows']))
 {
-    $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . (string) $_POST['num_rows'];
+    $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . $_POST['num_rows'];
 }
 $statement = oci_parse($connection, $query);
-/*$statement2 = oci_parse($connection, 'INSERT INTO history(username, query, date) VALUES(:username, :query, :date)');
-oci_bind_by_name($statement2, ":username", $_SESSION['NAME']);
-oci_bind_by_name($statement2, ":query", $query);
-oci_bind_by_name($statement2, ":date", sysdate);
-oci_execute($statement2);
-oci_commit($connection);
-oci_free_statement($statement2);*/
+$english = str_replace('dem', 'Elevation', $english);
+if (isset($_SESSION['NAME']))
+{
+    $statement2 = oci_parse($connection, 'INSERT INTO history(username, query, english, date_created) VALUES(:username, :query, :english, sysdate)');
+    oci_bind_by_name($statement2, ":username", $_SESSION['NAME']);
+    oci_bind_by_name($statement2, ":query", $query);
+    oci_bind_by_name($statement2, ":english", $english);
+    oci_execute($statement2);
+    oci_commit($connection);
+    oci_free_statement($statement2);
+}
 oci_execute($statement);
 
 echo "<html>";
@@ -265,6 +276,10 @@ for ($i=0; $i < $att_count; $i++)
     else if ($attributes[$i] == 'dem')
 	{
 		echo "Elevation";
+	}
+    else if ($attributes[$i] == 'COUNT')
+	{
+		echo "# Cities";
 	}
 	else
 	{
@@ -432,6 +447,7 @@ if ($hasele || $haspop) {
     echo "</table>";
 }
 echo $query;
+echo $english;
 echo "</body>";
 echo "</html>";
 //

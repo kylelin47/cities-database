@@ -7,7 +7,6 @@ session_start();
  $User_password = $_POST['Password'];
 
  $_SESSION['NAME'] = $User_username;
- $_SESSION["PASS"] = $User_password;
 
 if(isset($User_username) && isset($User_password)){
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
@@ -31,7 +30,7 @@ if(isset($User_username) && isset($User_password)){
              echo '<html>';
              echo "Welcome Back " . $FN ." " . $LA;
              echo '<br>';
-             echo '<a href = "index.html" >Click this Link back to homePage</a>';
+             echo '<a href = "User.php" >Click this Link back to Users page</a>';
              echo '</html>';
              }
              else{
@@ -45,7 +44,7 @@ if(isset($User_username) && isset($User_password)){
          }
          else{
              echo '<html>';
-             echo '<a href = "User.html" >Invalid User and Password information</a>';
+             echo '<a href = "User.php" >Invalid User and Password information</a>';
              echo '</html>';
          }
          }

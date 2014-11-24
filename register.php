@@ -16,7 +16,7 @@ and open the template in the editor.
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         if($Password != $Password1){
             echo '<html>';
-            echo '<a href = User.html>Click the following link to return to the previous page.</a>';
+            echo '<a href = User.php>Click the following link to return to the previous page.</a>';
             echo '</html>';
             echo '<br>';
             die("Error: missmatched password");
@@ -74,7 +74,6 @@ and open the template in the editor.
         oci_bind_by_name($sql_User, ":is_admin", $is_admin);
         if(oci_execute($sql_User) == TRUE){
                 oci_commit($connection);
-                echo $sql;
                 echo "New record created successfully";
                 echo "<br>";
                 echo '<a href = "index.html" >Click this Link back to homePage</a>';
