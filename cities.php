@@ -284,6 +284,8 @@ for ($i=1; $i <= $ncols; $i++)
     $th = oci_field_name($statement, $i);
     $th = str_replace('DEM', 'ELEVATION', $th);
     $th = str_replace('ASCIINAME', 'NAME', $th);
+    $th = str_replace('FLOOR(', '', $th);
+    $th = str_replace('))', ')', $th);
     echo $th;
 	echo "</th>\n";
 }
