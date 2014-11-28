@@ -24,6 +24,7 @@ if (isset($_SESSION['NAME']))
     echo "			<ul id = 'toolBar'>";
     echo "				<li><a href = 'index.html'>Home</a></li>";
     echo "				<li><a href = 'FAQ.html'>FAQ</a></li>";
+    echo "				<li><a href = 'Guide.html'>Guide</a></li>";
     echo "				<li><a href = 'Queries.html'>Queries</a></li>";
     echo "				<li><a href = 'User.php'>User</a></li>";
     echo "			</ul>";
@@ -68,6 +69,7 @@ else
     echo "			<ul id = 'toolBar'>";
     echo "				<li><a href = 'index.html'>Home</a></li>";
     echo "				<li><a href = 'FAQ.html'>FAQ</a></li>";
+    echo "				<li><a href = 'Guide.html'>Guide</a></li>";
     echo "				<li><a href = 'Queries.html'>Queries</a></li>";
     echo "				<li><a href = 'User.php'>User</a></li>";
     echo "			</ul>";

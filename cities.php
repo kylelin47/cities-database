@@ -283,6 +283,7 @@ for ($i=1; $i <= $ncols; $i++)
 	echo "<th>";
     $th = oci_field_name($statement, $i);
     $th = str_replace('DEM', 'ELEVATION', $th);
+    $th = str_replace('COUNT(ASCIINAME)', 'Number of Cities', $th);
     $th = str_replace('ASCIINAME', 'NAME', $th);
     $th = str_replace('FLOOR(', '', $th);
     $th = str_replace('))', ')', $th);
