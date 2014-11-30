@@ -67,7 +67,6 @@ for ($i = $minimum; $i < $maximum; $i = $i + $increment)
         }
     }
     echo "<td>" . strval($i) . " - " . strval($i + $increment) . "</td>";
-    echo $query;
     oci_free_statement($statement);
 }
 echo "</body>";
