@@ -154,7 +154,7 @@ if (!empty($_POST['wheres']))
             $selected_where = escapeSQL($wheres[$selected_attribute]);
             if ($selected_attribute === "asciiname" || $selected_attribute === "Country")
             {
-                $query = $query . $selected_attribute . "=" . "'" . $selected_where . "'";
+                $query = $query . 'upper(' . $selected_attribute . ')' . "=" . "'" . strtoupper($selected_where) . "'";
                 $hits++;
                 if ($hits < $valid_entries)
                 {
