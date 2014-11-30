@@ -2,6 +2,7 @@
 <?php
 session_start();
 include "database.php";
+include "country-names.php";
 $connection = oci_connect($username,
                           $password,
                           $connection_string);
@@ -154,6 +155,7 @@ if (!empty($_POST['wheres']))
             $selected_where = escapeSQL($wheres[$selected_attribute]);
             if ($selected_attribute === "asciiname" || $selected_attribute === "Country")
             {
+                if (isset($countrycodes[strtoupper($selected_where)])) $selected_where = $countrycodes[strtoupper($selected_where)];
                 $query = $query . 'upper(' . $selected_attribute . ')' . "=" . "'" . strtoupper($selected_where) . "'";
                 $hits++;
                 if ($hits < $valid_entries)
@@ -304,6 +306,7 @@ $hasele = false;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
     foreach ($row as $item) {
+        if (isset($countrynames[$item])) $item = $countrynames[$item];
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
     }
 
