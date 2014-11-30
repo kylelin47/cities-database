@@ -69,6 +69,7 @@ for ($i=0; $i < $att_count; $i++)
                 $query = $query . '(';
                 $query = $query . $avg_over[$k];
                 $query = $query . '))';
+                $english = $english . $avg_over[$k];
                 if ($k < $avg_count - 1)
                 {
                     $query = $query . ', ';
@@ -79,50 +80,58 @@ for ($i=0; $i < $att_count; $i++)
         else if ($attributes[$i] == 'MIN')
         {
             $query = $query . $attributes[$i];
+            $english = $english . 'minimum of ';
             $min_count = count($min_over);
             for ($k=0; $k < $min_count; $k++)
             {
                 $query = $query . '(';
                 $query = $query . $min_over[$k];
                 $query = $query . ')';
+                $english = $english . $min_over[$k];
                 if ($k < $min_count - 1)
                 {
                     $query = $query . ', ' . $agg_fun;
+                    $english = $english . ', ';
                 }
             }
         }
         else if ($attributes[$i] == 'MAX')
         {
             $query = $query . $attributes[$i];
+            $english = $english . 'maximum of ';
             $max_count = count($max_over);
             for ($k=0; $k < $max_count; $k++)
             {
                 $query = $query . '(';
                 $query = $query . $max_over[$k];
                 $query = $query . ')';
+                $english = $english . $max_over[$k];
                 if ($k < $max_count - 1)
                 {
                     $query = $query . ', ' . $agg_fun;
+                    $english = $english . 'average of ';
                 }
             }
         }
         else if ($attributes[$i] == 'COUNT')
         {
             $query = $query . 'COUNT(asciiname)';
+            $english = $english . 'number of cities';
             $count_set = true;
         }
     }
     else {
         $query = $query . escapeSQL($attributes[$i]);
+        $english = $english . $attributes[$i];
     }
     if ($i < $att_count - 1)
     {
     	$query = $query . ',';
+        $english = $english . ', ';
     }
 }
 $query = $query . 
          ' FROM (SELECT asciiname, country, population, dem, latitude, longitude, time_zone FROM cities ORDER BY population DESC)';
-$firstWhere = true;
 if (!empty($_POST['wheres']))
 {
     $wheres = $_POST['wheres'];
@@ -137,14 +146,10 @@ if (!empty($_POST['wheres']))
             $valid_entries++;
         }
     }
-    if ($firstWhere && $valid_entries > 0)
+    if ($valid_entries > 0)
     {
+        $english = $english . ' where ';
         $query = $query . ' WHERE ';
-        $firstWhere = false;
-    }
-    else if ($valid_entries > 0)
-    {
-        $query = $query . ' AND ';
     }
     $hits = 0;
     for ($i = 0; $i < $attributes_count; $i++)
@@ -157,10 +162,12 @@ if (!empty($_POST['wheres']))
             {
                 if (isset($countrycodes[strtoupper($selected_where)])) $selected_where = $countrycodes[strtoupper($selected_where)];
                 $query = $query . 'upper(' . $selected_attribute . ')' . "=" . "'" . strtoupper($selected_where) . "'";
+                $english = $english . $selected_attribute . ' is ' . $selected_where;
                 $hits++;
                 if ($hits < $valid_entries)
                 {
                     $query = $query . " AND ";
+                    $english = $english . ' and ';
                 }
             }
             else
@@ -170,10 +177,19 @@ if (!empty($_POST['wheres']))
                 if ($selected_where2 === "")
                     $selected_where2 = "1125140637";
                 $query = $query . $selected_attribute . " BETWEEN " . strval($selected_where) . " AND " . strval($selected_where2);
+                if ($selected_where2 === "1125140637")
+                {
+                    $english = $english . $selected_attribute . ' is greater than ' . strval($selected_where);
+                }
+                else
+                {
+                    $english = $english . $selected_attribute . ' is between ' . strval($selected_where) . " and " . strval($selected_where2);
+                }
                 $hits++;
                 if ($hits < $valid_entries)
                 {
                     $query = $query . " AND ";
+                    $english = $english . ' and ';
                 }
             }
         }
@@ -188,12 +204,16 @@ if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over)
 		if (!in_array($attributes[$k], $agg_funs))
 		{
 			if ($first != 0) {
-			$query = $query . ", "; }
+                $query = $query . ", "; 
+                $english = $english . ", ";
+                }
             else
             {
             	$query = $query . " GROUP BY ";
+                $english = $english . " grouped by ";
             }
 			$query = $query . escapeSQL($attributes[$k]);
+            $english = $english . escapeSQL($attributes[$k]);
             $group_by[$j] = escapeSQL($attributes[$k]);
             $j = $j + 1;
 			$first = 1;
@@ -202,7 +222,6 @@ if (isset($sum_over) || isset($avg_over) || isset($min_over) || isset($max_over)
 }
 if (!empty($_POST['havings']))
 {
-    $firstHaving = true;
     $havings = $_POST['havings'];
     $havings_count = count($havings);
     $valid_entries = 0;
@@ -216,14 +235,10 @@ if (!empty($_POST['havings']))
             $valid_entries++;
         }
     }
-    if ($firstHaving && $valid_entries > 0)
+    if ($valid_entries > 0)
     {
         $query = $query . ' HAVING ';
-        $firstHaving = false;
-    }
-    else if ($valid_entries > 0)
-    {
-        $query = $query . ' AND ';
+        $english = $english . ' having ';
     }
     $hits = 0;
     for ($i = 0; $i < $attributes_count; $i++)
@@ -236,11 +251,20 @@ if (!empty($_POST['havings']))
             $selected_having2 = $havings[$selected_attribute2];
             if ($selected_having2 === "")
                 $selected_having2 = "99999999999";
+            if ($selected_having2 === "99999999999")
+            {
+                $english = $english . $selected_attribute . " greater than " . strval($selected_having);
+            }
+            else
+            {
+                $english = $english . $selected_attribute . " is between " . strval($selected_having) . " and " . strval($selected_having2);
+            }
             $query = $query . $selected_attribute . " BETWEEN " . strval($selected_having) . " AND " . strval($selected_having2);
             $hits++;
             if ($hits < $valid_entries)
             {
                 $query = $query . " AND ";
+                $english = $english . ' and ';
             }
         }
     }
@@ -249,9 +273,12 @@ if (!empty($_POST['havings']))
 //$query = $query . " ORDER BY population DESC";
 if (!empty($_POST['num_rows']) && is_numeric($_POST['num_rows']))
 {
+    $english = 'View the first ' . $_POST['num_rows'] . ' results of ' . $english;
     $query = 'SELECT * FROM(' . $query . ') WHERE ROWNUM<=' . $_POST['num_rows'];
 }
 $english = str_replace('dem', 'Elevation', $english);
+$english = str_replace('asciiname', 'name', $english);
+
 if (isset($_SESSION['NAME']))
 {
     $statement2 = oci_parse($connection, 'INSERT INTO history(username, query, english, date_created) VALUES(:username, :query, :english, sysdate)');
