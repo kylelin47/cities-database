@@ -6,8 +6,6 @@ session_start();
  $User_username = $_POST['Username'];
  $User_password = $_POST['Password'];
 
- $_SESSION['NAME'] = $User_username;
-
 if(isset($User_username) && isset($User_password)){
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         $_SESSION['DataBaseConnect'] = $connection; 
@@ -25,7 +23,7 @@ if(isset($User_username) && isset($User_password)){
              }
          }
          if($temp_result == TRUE){
-             
+             $_SESSION['NAME'] = $User_username;
              if($is_admin == 0){
              echo '<html>';
              echo "Welcome Back " . $FN ." " . $LA;

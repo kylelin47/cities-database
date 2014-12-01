@@ -49,7 +49,7 @@ and open the template in the editor.
         if($temp_result){
             echo "Username already exist <br>";
             echo '<html>';
-            echo '<a href = index.php>Click the following link to return to the previous page.</a>';
+            echo '<a href = User.php>Click the following link to return to the previous page.</a>';
             echo '</html>';
         }
         else{
@@ -76,7 +76,7 @@ and open the template in the editor.
                 oci_commit($connection);
                 echo "New record created successfully";
                 echo "<br>";
-                echo '<a href = "index.html" >Click this Link back to homePage</a>';
+                echo '<a href = "User.php" >Click this Link back to User page</a>';
         }
         else{
             echo "Error";
