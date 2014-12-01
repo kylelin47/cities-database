@@ -273,12 +273,12 @@ if (!isset($group_by) || in_array($order_by, $group_by))
 {
     if (!empty($_POST['orderBy']))
     {
+        $_POST['orderBy'] = escapeSQL($_POST['orderBy']);
         if ($_POST['orderBy'] === 'dem') $query = $query . " ORDER BY " . $_POST['orderBy'] . "*1 DESC";
         else if ($_POST['orderBy'] === 'asciiname') $query = $query . " ORDER BY " . $_POST['orderBy'];
         else $query = $query . " ORDER BY " . $_POST['orderBy'] . " DESC";
     }
 }
-//$query = $query . " ORDER BY population DESC";
 if (!empty($_POST['num_rows']) && is_numeric($_POST['num_rows']))
 {
     $english = 'View the first ' . $_POST['num_rows'] . ' results of ' . $english;
