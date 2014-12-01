@@ -269,7 +269,7 @@ if (!empty($_POST['havings']))
         }
     }
 }
-if (!isset($group_by) || in_array($order_by, $group_by))
+if (!isset($group_by) || in_array($_POST['orderBy'], $group_by))
 {
     if (!empty($_POST['orderBy']))
     {
