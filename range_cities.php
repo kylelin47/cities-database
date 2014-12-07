@@ -41,7 +41,9 @@ $minele = 99999999999;
 $maxele = -9999999999;
 $haspop = true;
 $hasele = true;
+$num_rows = 0;
 while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
+    ++$num_rows;
     echo "<tr>\n";
     foreach ($row as $item) {
         echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
@@ -113,7 +115,7 @@ if ($hasele || $haspop) {
     if ($hasele) {
         echo "<tr>\n";
         echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
-        echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
+        echo "<td><b>Average Elevation: " . ($totalele/$num_rows) . "</b></td>";
         echo "</tr>";
         echo "<tr>\n";
         echo "<td><b>Min Elevation: " . $minele . "</b></td>";
