@@ -49,7 +49,6 @@ if (isset($_SESSION['NAME']))
     echo "</td>";
     echo "</tr>";
     }
-    echo "<a href='index.html'>Back Home</a>";
     echo "</div>";
     echo "		</div>";
     echo "	</body>";
