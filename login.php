@@ -30,8 +30,6 @@ if(isset($User_username) && isset($User_password)){
              echo "Welcome Back " . $FN ." " . $LA;
              echo '<br>';
              echo '<a href = "User.php" >Click this Link back to Users page</a>';
-             echo '<br>';
-             echo '<a href = "UserOnly.php" >Click here to see the queries JUST for you</a>';
              echo '</html>';
              }
              else{
