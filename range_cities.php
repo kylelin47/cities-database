@@ -122,7 +122,6 @@ if ($hasele || $haspop) {
     }
     echo "</table>";
 }
-echo $query;
 echo "</body>";
 echo "</html>";
 //
