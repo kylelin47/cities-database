@@ -16,36 +16,35 @@
 				<li><a href = "User.php">User</a></li>
 			</ul>
 			
-			<h2><center>Website Guide</center></h2>
-<p>&nbsp &nbsp This website is purely class use. This version is the final product of class project for CIS4301 – database. 
-It is created by student Joachim Jones, Jinchi Lin, Kyle Lin, Qian Wang.  
-Thus &copy Joachim Jones, Jinchi Lin, Kyle Lin, Qian Wang
-<br>
-&nbsp &nbspFor this site, we&#39ve decided on storing the geographic and population statistics of cities in our database. 
-Specifically, we&#39ll be retrieving the text files from geonames.org pertaining to cities. 
-The data are subdivided into three categories: cities with population over one thousand, five thousand,
-and fifteen thousand, mutually exclusive. Each city detailed in the data has a unique ID, name,
-list of alternate names, latitude, longitude, country, population, elevation, and time zone.
-Furthermore, tuples referring to major cities can be extended through use of the landmarks data set that 
-provides name, location, and type of notable places sorted by city.
-<br>
-&nbsp &nbsp We&#39ve decided on this data set because the attributes of cities have a lot of 
-interconnectivity and dependencies that are not immediately obvious and cannot be determined through
-small scale comparisons. They instead require analysis of large amounts of data and large numbers of
-comparisons between attributes. A database is ideal for this task, and proper queries would give answers
-to a lot of interesting questions. 
-<br>
-&nbsp &nbsp Cities have the additional benefit that many of its attributes are both quantitative and hierarchical:
-the city with the largest number in the population column has the largest population, the city with
-the largest latitude is the furthest north. This allows for easy, valid comparisons within large data sets 
-and is very helpful in statistical analysis. In contrast, some data sets (like music) contain attributes like
-tone and loudness that are quantitative but have little meaning when compared to others in the data set,
-and are more akin to qualitative categorizations.
-<br>
-&nbsp&nbspThe data set we&#39ll be using is updated with new information and checked for errors frequently, 
-and preliminary analysis points toward the formatting being highly structured and amenable to being 
-read directly into a database with the right program.
-</p>
+			<h3>Step 1</h3>
+            <p>Think of a question. Some examples:
+            <ul class="questions">
+                <li>What's the sum of the populations of all cities in China?</li>
+                <li>How many cities have populations over 100,000 and are above 1,000 meters above sea level?</li>
+                <li>What is the population of the largest city in each time zone?</li>
+                <li>Find all the cities in the United States with populations over 1,000,000</li>
+            </ul>
+            </p>
+            <h3>Step 2</h3>
+            <p>
+                Determine what attributes you want to know about. For example, if you want to know about all cities in the United States
+                with populations over a million, what exactly do you want to know about them? Say that you were most interested in their
+                name, population, and elevation. Then, your select section should look like this:<br />
+                <img src="image/select.png" class="guide" />
+            </p>
+            <h3>Step 3</h3>
+            <p>
+                Determine what criteria your question has. If you want to know about all cities in the United States with populations over
+                a million, your filters are that the city must be in the United States and have a population over a million. Because of that.
+                your filter section of the page should look like this:<br />
+                <img src="image/filter.png" class="guide" />
+            </p>
+            <h3>Step 4</h3>
+            <p>
+                Click the search button! The table returned should look like this:<br />
+                <img src="image/table.png" class="guide" /><br /><br />
+                You can sort by clicking on the headings of each column.
+            </p>
 		</div>
 	</body>
 </html>
