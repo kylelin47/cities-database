@@ -16,7 +16,7 @@ and open the template in the editor.
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         if($Password != $Password1){
             echo '<html>';
-            echo '<a href = User.html>Click the following link to return to the previous page.</a>';
+            echo '<a href = User.php>Click the following link to return to the previous page.</a>';
             echo '</html>';
             echo '<br>';
             die("Error: missmatched password");
@@ -49,7 +49,7 @@ and open the template in the editor.
         if($temp_result){
             echo "Username already exist <br>";
             echo '<html>';
-            echo '<a href = index.php>Click the following link to return to the previous page.</a>';
+            echo '<a href = User.php>Click the following link to return to the previous page.</a>';
             echo '</html>';
         }
         else{
@@ -61,13 +61,22 @@ and open the template in the editor.
         else{
             $is_admin = 0;
         }
+        oci_free_statement($sql_User);
         $sql = "INSERT INTO login (USERNAME,PASSWORD,FNAME,LNAME,CITY,COUNTRY,is_admin) 
-               VALUES ('$Username','$Password','$FName','$LName','$CITY','$COUNTRY','$is_admin')";   
+               VALUES (:Username, :Password, :FName, :LName, :CITY, :COUNTRY, :is_admin)";   
         $sql_User =oci_parse($connection, $sql);
+        oci_bind_by_name($sql_User, ":Username", $Username);
+        oci_bind_by_name($sql_User, ":Password", $Password);
+        oci_bind_by_name($sql_User, ":FName", $FName);
+        oci_bind_by_name($sql_User, ":LName", $LName);
+        oci_bind_by_name($sql_User, ":CITY", $CITY);
+        oci_bind_by_name($sql_User, ":COUNTRY", $COUNTRY);
+        oci_bind_by_name($sql_User, ":is_admin", $is_admin);
         if(oci_execute($sql_User) == TRUE){
+                oci_commit($connection);
                 echo "New record created successfully";
                 echo "<br>";
-                echo '<a href = "index.html" >Click this Link back to homePage</a>';
+                echo '<a href = "User.php" >Click this Link back to User page</a>';
         }
         else{
             echo "Error";

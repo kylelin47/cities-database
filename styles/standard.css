@@ -62,3 +62,25 @@ label.error {
     padding-right: 5px;
     font-size:0.9em;
 }
+label.where {
+  text-align:left;
+  padding-right:10px;
+  display:inline-block;
+  min-width:100px;
+}
+
+div.select{
+    margin-left: 20px;
+    float: left; 
+    width: 300px;
+}
+div.filter{
+    float: left; 
+    width: 600px;
+}
+
+div.userBox {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+

@@ -1,18 +1,12 @@
-
-
-
 <?php
 
 session_start();
 //include "database.php";
 
- $User_username = $_POST['username'];
- $User_password = $_POST['password'];
+ $User_username = $_POST['Username'];
+ $User_password = $_POST['Password'];
 
- $_SESSION['NAME'] = $User_username;
- $_SESSION["PASS"] = $User_password;
-
-if($User_username && $User_password ){
+if(isset($User_username) && isset($User_password)){
         $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
         $_SESSION['DataBaseConnect'] = $connection; 
          if($connection){
@@ -29,12 +23,12 @@ if($User_username && $User_password ){
              }
          }
          if($temp_result == TRUE){
-             
+             $_SESSION['NAME'] = $User_username;
              if($is_admin == 0){
              echo '<html>';
-             echo "Welcom Back:"." &nbsp". $FN.",".$LA;
+             echo "Welcome Back " . $FN ." " . $LA;
              echo '<br>';
-             echo '<a href = "UserOnly.php" >Click this Link back to homePage</a>';
+             echo '<a href = "User.php" >Click this Link back to Users page</a>';
              echo '</html>';
              }
              else{
@@ -48,7 +42,7 @@ if($User_username && $User_password ){
          }
          else{
              echo '<html>';
-             echo '<a href = "User.html" >Invalid User and Password information</a>';
+             echo '<a href = "User.php" >Invalid User and Password information</a>';
              echo '</html>';
          }
          }
@@ -57,6 +51,7 @@ if($User_username && $User_password ){
 else{
 	die('False input Or No input');
 }
+
  //
 // VERY important to close Oracle Database Connections and free statements!
 //
