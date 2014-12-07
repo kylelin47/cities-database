@@ -34,6 +34,8 @@ if (isset($_SESSION['NAME']))
     echo "<input type='hidden' name='logout' value='1' />";
     echo "<input type='submit' value='logout' />";
     echo "</form>";
+    echo '<a href = "UserOnly.php" >Click here to see the queries JUST for you</a>';
+    echo '<br>';
     echo "<h1>Past 10 Queries</h1>";
     while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
     echo "<tr>\n";
@@ -42,8 +44,6 @@ if (isset($_SESSION['NAME']))
         $english = $item;
     }
     echo "<td>";
-    echo '<br>';
-    echo '<a href = "UserOnly.php" >Click here to see the queries JUST for you</a>';
     echo '<br>';
     echo "<form action='cities.php' method='post' target='_blank'>";
     echo "<input type='hidden' name='english' value='" . $english . "' />";
