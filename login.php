@@ -35,7 +35,7 @@ if(isset($User_username) && isset($User_password)){
              echo '<html>';
              echo "Welcom Back Administrator:"." &nbsp". $FN.",".$LA;
              echo '<br>';
-             echo '<a href = "Admin.html" >Click this Link back to ADMIN page</a>';
+             echo '<a href = "admin.php" >Click this Link back to ADMIN page</a>';
              echo '</html>';                 
                  
              }
