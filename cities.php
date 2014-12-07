@@ -424,7 +424,7 @@ if ($hasele || $haspop) {
     if ($hasele) {
         echo "<tr>\n";
         echo "<td><b>Total Elevation: " . $totalele . "</b></td>";
-        echo "<td><b>Average Elevation: " . ($totalele/$_POST['num_rows']) . "</b></td>";
+        echo "<td><b>Average Elevation: " . ($totalele/$num_rows) . "</b></td>";
         echo "</tr>";
         echo "<tr>\n";
         echo "<td><b>Min Elevation: " . $minele . "</b></td>";

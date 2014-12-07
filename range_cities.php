@@ -105,7 +105,7 @@ if ($hasele || $haspop) {
     if ($haspop) {
         echo "<tr>\n";
         echo "<td><b>Total Population: " . $totalpop . "</b></td>";
-        echo "<td><b>Average Population: " . ($totalpop/$_POST['num_rows']) . "</b></td>";
+        echo "<td><b>Average Population: " . ($totalpop/$num_rows) . "</b></td>";
         echo "</tr>";
         echo "<tr>\n";
         echo "<td><b>Min Population: " . $minpop . "</b></td>";
