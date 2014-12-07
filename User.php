@@ -42,6 +42,9 @@ if (isset($_SESSION['NAME']))
         $english = $item;
     }
     echo "<td>";
+    echo '<br>';
+    echo '<a href = "UserOnly.php" >Click here to see the queries JUST for you</a>';
+    echo '<br>';
     echo "<form action='cities.php' method='post' target='_blank'>";
     echo "<input type='hidden' name='english' value='" . $english . "' />";
     echo "<input type='submit' value='Search' />";
