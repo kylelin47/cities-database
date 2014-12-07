@@ -48,7 +48,7 @@ for ($i=0; $i < $att_count; $i++)
             for ($j=0; $j < $sum_count; $j++)
             {
                 $query = $query . '(';
-                $query = $query . $sum_over[$j];
+                $query = $query . $sum_over[$j] . '*1';
                 $query = $query . ')';
                 $english = $english . $sum_over[$j];
                 if ($j < $sum_count - 1)
@@ -67,7 +67,7 @@ for ($i=0; $i < $att_count; $i++)
                 $english = $english . $avg_over[$k];
                 $query = $query . "floor(" . $attributes[$i];
                 $query = $query . '(';
-                $query = $query . $avg_over[$k];
+                $query = $query . $avg_over[$k] . '*1';
                 $query = $query . '))';
                 $english = $english . $avg_over[$k];
                 if ($k < $avg_count - 1)
@@ -85,7 +85,7 @@ for ($i=0; $i < $att_count; $i++)
             for ($k=0; $k < $min_count; $k++)
             {
                 $query = $query . '(';
-                $query = $query . $min_over[$k];
+                $query = $query . $min_over[$k] . '*1';
                 $query = $query . ')';
                 $english = $english . $min_over[$k];
                 if ($k < $min_count - 1)
@@ -103,7 +103,7 @@ for ($i=0; $i < $att_count; $i++)
             for ($k=0; $k < $max_count; $k++)
             {
                 $query = $query . '(';
-                $query = $query . $max_over[$k];
+                $query = $query . $max_over[$k] . '*1';
                 $query = $query . ')';
                 $english = $english . $max_over[$k];
                 if ($k < $max_count - 1)
@@ -226,7 +226,7 @@ if (!empty($_POST['havings']))
     $havings_count = count($havings);
     $valid_entries = 0;
     $possible_attributes = array('sum(Population)', 'sum(dem)', 'floor(avg(Population))', 'count(asciiname)',
-                                 'floor(avg(dem))', 'min(Population)', 'min(dem)', 'max(Population)', 'max(dem)');
+                                 'floor(avg(dem))', 'min(Population)', 'min(dem*1)', 'max(Population)', 'max(dem*1)');
     $attributes_count = count($possible_attributes);
     for ($i = 0; $i < $attributes_count; $i++)
     {
@@ -324,6 +324,7 @@ for ($i=1; $i <= $ncols; $i++)
     $th = str_replace('ASCIINAME', 'NAME', $th);
     $th = str_replace('FLOOR(', '', $th);
     $th = str_replace('))', ')', $th);
+    $th = str_replace('*1', '', $th);
     echo $th;
 	echo "</th>\n";
 }
