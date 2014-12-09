@@ -8,7 +8,10 @@
         $Password1 = $_POST['Password1'];
         $CITY = $_POST['City'];
         $COUNTRY =$_POST['Country'];
-        $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+        include "database.php";
+        $connection = oci_connect($username,
+                                  $password,
+                                  $connection_string);
         if($Password != $Password1){
             echo '<html>';
             echo '<a href = User.php>Click the following link to return to the previous page.</a>';

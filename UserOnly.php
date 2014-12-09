@@ -21,7 +21,10 @@
                  <?php
                  session_start();
                  $buff_name = $_SESSION['NAME'];
-                 $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+                 include "database.php";
+                 $connection = oci_connect($username,
+                                          $password,
+                                          $connection_string);
                  $query = "SELECT city FROM login WHERE Username =  '{$buff_name}'";
                  $sql_User =oci_parse($connection, $query);
                  oci_execute($sql_User);

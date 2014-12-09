@@ -1,14 +1,16 @@
 #!/usr/local/bin/php
 <?php
 
-session_start();
-//include "database.php";
+ session_start();
+ include "database.php";
 
  $User_username = $_POST['Username'];
  $User_password = $_POST['Password'];
 
 if(isset($User_username) && isset($User_password)){
-        $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+        $connection = oci_connect($username,
+                                  $password,
+                                  $connection_string);
         $_SESSION['DataBaseConnect'] = $connection; 
          if($connection){
             $sql_User =oci_parse($connection, "SELECT * FROM login");

@@ -19,6 +19,9 @@ echo "</head>\n";
 echo "<body>";
 echo "<table class='sortable'>\n";
 echo "<tr>\n";
+echo "<th>";
+echo $increment_over;
+echo "</th>";
 for ($i=0; $i < $att_count; $i++)
 {
     echo "<th>";
@@ -42,9 +45,6 @@ for ($i=0; $i < $att_count; $i++)
         echo "Maximum Elevation";
     echo "</th>";
 }
-echo "<th>";
-echo $increment_over;
-echo "</th>";
 for ($i = $minimum; $i < $maximum; $i = $i + $increment)
 {
     if ($i + $increment > $maximum) $increment = $maximum - $i;
@@ -60,13 +60,14 @@ for ($i = $minimum; $i < $maximum; $i = $i + $increment)
     $query = $query . " FROM cities WHERE " . $increment_over . " BETWEEN " . strval($i) . " AND " . strval($i + $increment);
     $statement = oci_parse($connection, $query);
     oci_execute($statement);
+    echo "<tr>\n";
     echo "<td>" . strval($i) . " - " . strval($i + $increment) . "</td>";
     while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
-        echo "<tr>\n";
         foreach ($row as $item) {
             echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
         }
     }
+    echo "</tr>";
     oci_free_statement($statement);
 }
 echo "</body>";

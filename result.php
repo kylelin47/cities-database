@@ -2,7 +2,10 @@
 <?php
 
 session_start();
- $connection = oci_connect('kylin','citiesdatabase','//oracle.cise.ufl.edu/orcl');
+include "database.php"
+$connection = oci_connect($username,
+                          $password,
+                          $connection_string);
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
