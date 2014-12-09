@@ -34,11 +34,11 @@ for ($i=0; $i < $att_count; $i++)
         echo "Average Elevation";
     else if ($attributes[$i] == 'min(Population)')
         echo "Minimum Population";
-    else if ($attributes[$i] == 'min(dem)')
+    else if ($attributes[$i] == 'min(dem*1)')
         echo "Minimum Elevation";
     else if ($attributes[$i] == 'max(Population)')
         echo "Maximum Population";
-    else if ($attributes[$i] == 'max(dem)')
+    else if ($attributes[$i] == 'max(dem*1)')
         echo "Maximum Elevation";
     echo "</th>";
 }
@@ -60,13 +60,13 @@ for ($i = $minimum; $i < $maximum; $i = $i + $increment)
     $query = $query . " FROM cities WHERE " . $increment_over . " BETWEEN " . strval($i) . " AND " . strval($i + $increment);
     $statement = oci_parse($connection, $query);
     oci_execute($statement);
+    echo "<td>" . strval($i) . " - " . strval($i + $increment) . "</td>";
     while ($row = oci_fetch_array($statement, OCI_ASSOC+OCI_RETURN_NULLS)) {
         echo "<tr>\n";
         foreach ($row as $item) {
             echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
         }
     }
-    echo "<td>" . strval($i) . " - " . strval($i + $increment) . "</td>";
     oci_free_statement($statement);
 }
 echo "</body>";
